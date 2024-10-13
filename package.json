@@ -1,9 +1,22 @@
 {
+  "name": "stat.ink-brella-counter",
+  "description": "Count Brellas from your [stat.ink](https://stat.ink) data.",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "deno run -A src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NorthWestWind",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@types/node": "^20.14.11",
-    "moment": "^2.30.1"
+    "express": "^4.21.1",
+    "moment": "^2.30.1",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "@types/moment": "^2.13.0"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.5",
+    "@types/node-cron": "^3.0.11"
   }
 }

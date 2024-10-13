@@ -130,4 +130,5 @@ dist
 .pnp.*
 
 # runtime
+.vscode
 work

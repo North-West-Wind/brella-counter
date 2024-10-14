@@ -1,0 +1,13 @@
+.brella.vert img {
+	max-width: 128px;
+	width: 20vw;
+}
+
+.brella.hori {
+	display: flex;
+	align-items: center;
+}
+
+.brella.hori img {
+	width: 128px;
+}

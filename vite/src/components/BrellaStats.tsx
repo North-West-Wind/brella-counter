@@ -13,10 +13,10 @@ function BrellaStats() {
 	}, []);
 
 	return <div className={"flex hcenter" + (horizontal ? "" : " vflex")} style={{ alignItems: horizontal ? "end" : "" }}>
-		<BrellaColumn brellas={["splat_brella", "sorella_brella", "order_brella"]} integrelle="splat" />
-		<BrellaColumn brellas={["undercover_brella", "undercover_sorella_brella"]} integrelle="undercover" />
-		<BrellaColumn brellas={["tenta_brella", "tenta_sorella_brella"]} integrelle="tent" />
-		<BrellaColumn brellas={["recycled_mk1", "recycled_mk2"]} integrelle="recycled" />
+		<BrellaColumn brellas={["parashelter", "parashelter_sorella", "order_shelter_replica"]} integrelle="splat" />
+		<BrellaColumn brellas={["spygadget", "spygadget_sorella"]} integrelle="undercover" />
+		<BrellaColumn brellas={["campingshelter", "campingshelter_sorella"]} integrelle="tent" />
+		<BrellaColumn brellas={["brella24mk1", "brella24mk2"]} integrelle="recycled" />
 	</div>
 }
 

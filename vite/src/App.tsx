@@ -5,8 +5,10 @@ import { analytics } from './main.tsx';
 
 async function updateAnalytics() {
   const res = await fetch("/api/analytics");
-  if (res.ok)
+  if (res.ok) {
     analytics(await res.json());
+    globalThis.window.dispatchEvent(new Event("custom:update-analytics"));
+  }
 }
 
 function App() {

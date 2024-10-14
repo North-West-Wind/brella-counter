@@ -1,13 +1,19 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import "./Brella.css";
+import { analytics, Brellas } from "../main";
 
-function Brella(props: { src: string, count: number }) {
-	const [brellaCount, setBrellaCount] = useState(props.count);
+function Brella(props: { brella: string }) {
+	const [brellaCount, setBrellaCount] = useState(0);
 	const [horizontal, setHorizontal] = useState(globalThis.window.innerWidth > globalThis.window.innerHeight);
 
 	useEffect(() => {
-		setBrellaCount(props.count);
-	}, [props.count]);
+		const update = () => {
+			setBrellaCount(analytics()?.specifics[props.brella as keyof Brellas] || 0);
+		};
+
+		globalThis.window.addEventListener("custom:update-analytics", update);
+		() => globalThis.window.removeEventListener("custom:update-analytics", update);
+	}, []);
 
 	useLayoutEffect(() => {
 		const onresize = () => {
@@ -18,7 +24,7 @@ function Brella(props: { src: string, count: number }) {
 	}, []);
 
 	return <div className={"brella " + (horizontal ? "hori" : "vert")}>
-		<img src={props.src} />
+		<img src={`/brellas/${props.brella}.png`} />
 		<h2>{brellaCount}</h2>
 	</div>
 }

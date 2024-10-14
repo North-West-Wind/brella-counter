@@ -13,7 +13,7 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	}, []);
 
 	return <div className={horizontal ? "flex-fill" : "flex vcenter"}>
-		{props.brellas.map(brella => <Brella src={`/brellas/${brella}.png`} count={1}/>)}
+		{props.brellas.map(brella => <Brella brella={brella} />)}
 	</div>
 }
 

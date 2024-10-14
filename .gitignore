@@ -132,3 +132,7 @@ dist
 # runtime
 .vscode
 work
+
+# vite output
+public/index.html
+public/vite

@@ -1,5 +1,10 @@
+@font-face {
+  font-family: Splatoon2;
+  src: url("/BlitzMain.otf");
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Splatoon2, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -34,6 +39,10 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  margin: 0;
+}
+
 .flex {
   display: flex;
 }
@@ -50,8 +59,8 @@ h1 {
   align-items: center;
 }
 
-.flex-fill {
-  flex-grow: 1;
+.flex-dist {
+  flex: 1;
 }
 
 button {

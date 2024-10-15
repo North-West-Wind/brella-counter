@@ -1,0 +1,18 @@
+.about {
+	text-align: left;
+}
+
+.about * {
+	font-size: 1.25vmax;
+}
+
+.about h3 {
+	font-size: 2vmax;
+	margin-bottom: 0;
+	margin-left: 1vw;
+}
+
+.about a:hover {
+	cursor: pointer;
+	filter: brightness(80%);
+}

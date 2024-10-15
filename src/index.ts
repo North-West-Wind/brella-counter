@@ -2,7 +2,7 @@ import cron from "npm:node-cron";
 // @deno-types="npm:@types/express"
 import express from "npm:express";
 import { recalibrate, recalibrateWithFile, resetDay, updateMatches } from "./helper/observer.ts";
-import { analytics, state } from "./store.ts";
+import { analytics, state, todayBrellas, todayGames } from "./store.ts";
 import { ensureRuntimeDir } from "./helper/fs.ts";
 import path from "node:path";
 
@@ -33,6 +33,13 @@ app.get("/api", (_req, res) => {
 
 app.get("/api/analytics", (_req, res) => {
 	res.json(analytics());
+});
+
+app.get("/api/today", (_req, res) => {
+	res.json({
+		brellas: todayBrellas() || 0,
+		games: todayGames() || 0
+	})
 });
 
 app.listen(Deno.env.get("PORT") || 3000, () => console.log("Server is listening"));

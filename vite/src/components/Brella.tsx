@@ -8,7 +8,7 @@ function Brella(props: { brella: string }) {
 
 	useEffect(() => {
 		const update = () => {
-			setBrellaCount(analytics()?.specifics[props.brella as keyof Brellas] || 0);
+			setBrellaCount(analytics().specifics[props.brella as keyof Brellas] || 0);
 		};
 
 		globalThis.window.addEventListener("custom:update-analytics", update);
@@ -25,7 +25,7 @@ function Brella(props: { brella: string }) {
 
 	return <div className={"brella " + (horizontal ? "hori" : "vert")}>
 		<img src={`/brellas/${props.brella}.png`} />
-		<h2>{brellaCount}</h2>
+		<h2 className="number">{brellaCount}</h2>
 	</div>
 }
 

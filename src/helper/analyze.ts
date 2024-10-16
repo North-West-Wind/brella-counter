@@ -3,13 +3,16 @@ import moment from "moment";
 import { createInterface } from "node:readline";
 import { getRuntimePath, saveToTextFile } from "./fs.ts";
 import { Buffer } from "node:buffer";
-import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member } from "../common.ts";
+import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common.ts";
 import { existsSync } from "node:fs";
 import { todayBrellas, todayGames } from "../store.ts";
 
 export function analyzeFile() {
-	return new Promise<Analytics & { lastBattleId: string }>((res, rej) => {
-		if (!existsSync(getRuntimePath("stats.json"))) rej(new Error("stats.json doesn't exist"));
+	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
+		if (!existsSync(getRuntimePath("stats.json"))) {
+			console.log("stats.json doesn't exist");
+			res(null);
+		}
 		let startDate = 0;
 		const analytics = defaultAnalytics();
 		let lastBattleId = "";
@@ -40,7 +43,7 @@ export function analyzeFile() {
 	});
 }
 
-export function analyzeSingleBattle(analytics: Analytics, splatlog: any, today: boolean) {
+export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike, today: boolean) {
 	analytics.totalGames++;
 	if (today) todayGames((todayGames() || 0) + 1);
 	const our = splatlog.our_team_members;
@@ -69,4 +72,14 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: any, today: 
 			if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 		});
 	}
+}
+
+export function simplifySplatlog(splatlog: SplatlogLike) {
+	return {
+		id: splatlog.id,
+		start_at: { time: splatlog.start_at.time },
+		our_team_members: splatlog.our_team_members,
+		their_team_members: splatlog.their_team_members,
+		third_team_members: splatlog.third_team_members
+	};
 }

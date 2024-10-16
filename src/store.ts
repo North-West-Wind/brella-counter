@@ -1,12 +1,14 @@
-import { State, type Analytics } from "./common.ts";
+import { defaultAnalytics, State, type Analytics } from "./common.ts";
 
-const internal: Partial<{
+const internal: {
 	lastBattleId: string,
 	analytics: Analytics,
 	todayGames: number,
 	todayBrellas: number,
 	state: State
-}> = {
+} = {
+	lastBattleId: "",
+	analytics: defaultAnalytics(),
 	todayGames: 0,
 	todayBrellas: 0,
 	state: State.STARTING

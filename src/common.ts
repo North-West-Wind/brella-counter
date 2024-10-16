@@ -40,11 +40,11 @@ export type Analytics = {
 }
 
 export enum State {
-	STARTING,
-	OK,
-	RECALIBRATING,
-	UPDATING,
-	ERROR,
+	STARTING = "starting",
+	OK = "ok",
+	RECALIBRATING = "recalibrating",
+	UPDATING = "updating",
+	ERROR = "error",
 }
 
 export function defaultAnalytics() {
@@ -70,4 +70,12 @@ export function defaultBrellas() {
 		brella24mk1: 0, // recycled 1
 		brella24mk2: 0, // recycled 2
 	} as Brellas;
+}
+
+export type SplatlogLike = {
+	id: string,
+	start_at: { time: string },
+	our_team_members: Member[],
+	their_team_members: Member[],
+	third_team_members: Member[],
 }

@@ -12,6 +12,10 @@ export function saveToTextFile(name: string, buffer: Buffer) {
 	fs.writeFileSync(path.join(RUNTIME_DIR, name), buffer, { encoding: "utf8" });
 }
 
+export function appendToTextFile(name: string, text: string) {
+	fs.appendFileSync(path.join(RUNTIME_DIR, name), text);
+}
+
 export function getRuntimePath(p: string) {
 	return path.join(RUNTIME_DIR, p);
 }

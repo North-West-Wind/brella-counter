@@ -1,15 +1,14 @@
 import cron from "npm:node-cron";
 // @deno-types="npm:@types/express"
 import express from "npm:express";
-import { recalibrate, recalibrateWithFile, resetDay, updateMatches } from "./helper/observer.ts";
+import { recalibrate, resetDay, updateMatches } from "./helper/observer.ts";
 import { analytics, state, todayBrellas, todayGames } from "./store.ts";
 import { ensureRuntimeDir } from "./helper/fs.ts";
 import path from "node:path";
 
 // initialize
 ensureRuntimeDir();
-if (Deno.env.get("RECALIBRATE_USE_FILE")) await recalibrateWithFile();
-else await recalibrate();
+await recalibrate();
 
 // every 5 minutes
 cron.schedule("*/5 * * * *", updateMatches);

@@ -7,6 +7,7 @@ import { analytics, state, todayBrellas, todayGames } from "./store";
 import { ensureRuntimeDir } from "./helper/fs";
 import path from "node:path";
 import "dotenv/config";
+import { readdirSync } from "node:fs";
 
 // initialize
 ensureRuntimeDir();
@@ -41,6 +42,12 @@ app.get("/api/today", (_req, res) => {
 		brellas: todayBrellas() || 0,
 		games: todayGames() || 0
 	})
+});
+
+app.get("/random-integrelle", (_req, res) => {
+	const dir = path.join(__dirname, "../public/integrelle/emotes");
+	const files = readdirSync(dir);
+	res.sendFile(path.join(dir, files[Math.floor(Math.random() * files.length)]));
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server is listening"));

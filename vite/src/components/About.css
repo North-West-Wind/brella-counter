@@ -18,5 +18,6 @@
 }
 
 .about img {
-	width: 25vw;
+	width: 25vmin;
+	margin-right: 1vmax;
 }

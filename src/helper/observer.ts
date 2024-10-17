@@ -4,12 +4,14 @@ import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze.ts
 import { appendToTextFile } from "./fs.ts";
 import { safeOkState } from "./state.ts";
 
+const USER = Deno.env.get("USER") || "NorthWestWind";
+
 function sleep(ms: number) {
 	return new Promise(res => setTimeout(res, ms));
 }
 
 export async function updateMatches() {
-	const url = "https://stat.ink/@NorthWestWind/spl3/index.json";
+	const url = `https://stat.ink/@${USER}/spl3/index.json`;
 	state(State.UPDATING);
 	try {
 		const stored = analytics();

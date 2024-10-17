@@ -1,9 +1,8 @@
-import { useState } from "react";
 import "./About.css";
-import { multiPartialRandomColor } from "../helper/color";
+import { useColors } from "../hooks/useColors";
 
 function About() {
-	const [colors] = useState(multiPartialRandomColor(6));
+	const colors = useColors(6);
 
 	return <div className="about">
 		<h3>What is this?</h3>

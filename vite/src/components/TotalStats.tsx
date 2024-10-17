@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { analytics } from "../main";
 import "./TotalStats.css";
-import { multiPartialRandomColor } from "../helper/color";
+import { useColors } from "../hooks/useColors";
 
 function TotalStats() {
 	const [brellaCount, setBrellaCount] = useState(0);
 	const [gameCount, setGameCount] = useState(0);
-	const [[brellaColor, gameColor]] = useState(multiPartialRandomColor(2));
+	const [brellaColor, gameColor] = useColors(2);
 
 	useEffect(() => {
 		const update = () => {

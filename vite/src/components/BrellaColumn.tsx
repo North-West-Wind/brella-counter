@@ -1,13 +1,14 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Brella from "./Brella";
 import "./BrellaColumn.css";
-import { partialRandomColor } from "../helper/color";
 import { multiRandomBoolean } from "../helper/math";
 import { SVG } from "@svgdotjs/svg.js";
+import { useColor } from "../hooks/useColors";
+import { useHorizontal } from "../hooks/useHorizontal";
 
 function BrellaColumn(props: { brellas: string[], integrelle: string }) {
-	const [horizontal, setHorizontal] = useState(globalThis.window.innerWidth > globalThis.window.innerHeight);
-	const [color] = useState(partialRandomColor());
+	const horizontal = useHorizontal();
+	const color = useColor();
 	const [svg, setSvg] = useState("");
 
 	useEffect(() => {
@@ -25,14 +26,6 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 				setSvg('data:image/svg+xml;base64,' + btoa(draw.svg(false)));
 			}
 		});
-	}, []);
-
-	useLayoutEffect(() => {
-		const onresize = () => {
-			setHorizontal(globalThis.window.innerWidth > globalThis.window.innerHeight);
-		};
-		globalThis.window.addEventListener("resize", onresize);
-		return () => globalThis.window.removeEventListener("resize", onresize);
 	}, []);
 
 	return <div className={horizontal ? "flex-dist" : ""}>

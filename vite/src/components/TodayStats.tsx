@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { today } from "../main";
-import { partialRandomColor } from "../helper/color";
+import { useColor } from "../hooks/useColors";
 
 function TodayStats() {
 	const [brellaCount, setBrellaCount] = useState(0);
 	const [gameCount, setGameCount] = useState(0);
-	const [color] = useState(partialRandomColor());
+	const color = useColor();
 
 	useEffect(() => {
 		const update = () => {

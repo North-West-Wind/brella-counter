@@ -30,14 +30,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="4.7784558"
-     inkscape:cx="82.244142"
-     inkscape:cy="221.72435"
-     inkscape:window-width="1920"
-     inkscape:window-height="1004"
-     inkscape:window-x="1920"
-     inkscape:window-y="1080"
+     inkscape:cx="82.244143"
+     inkscape:cy="175.57973"
+     inkscape:window-width="1440"
+     inkscape:window-height="824"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g12888-7-9"
      showgrid="false" />
   <defs
      id="defs1">
@@ -310,7 +310,7 @@
                d="m 35.337684,30.048016 c 0.06623,0.01651 0.101085,0.01643 0.227872,0.08012 0.126787,0.06369 0.178916,0.06758 0.328926,0.01841 0.15001,-0.04917 0.426821,-0.104118 0.562324,-0.04661 0.135503,0.05751 0.147141,0.171135 0.152544,0.256503 0.0054,0.08537 -0.06085,0.173417 -0.201396,0.201815 -0.140544,0.0284 -0.216779,0.0267 -0.311527,-0.0115 -0.09475,-0.0382 -0.133288,-0.09828 -0.184242,-0.166434 -0.05095,-0.06816 -0.106017,-0.119419 -0.186774,-0.125256 -0.08076,-0.0058 -0.143274,0.06881 -0.180494,0.118332 -0.03722,0.04952 -0.10222,0.115799 -0.176059,0.125393 -0.07384,0.0096 -0.245019,0.0047 -0.300943,-0.02616 -0.05592,-0.0309 -0.127051,-0.06548 -0.158828,-0.143196 -0.03178,-0.07771 -0.03264,-0.197771 0.04226,-0.247034 0.0749,-0.04926 0.14307,-0.05027 0.184629,-0.05251 0.04156,-0.0022 0.13547,0.0016 0.201706,0.01811 z"
                sodipodi:nodetypes="zzzzzzzzzzzzzzzzz" />
             <g
-               id="g7"
+               id="eye-open"
                inkscape:label="open"
                style="display:inline;stroke-width:1.04005">
               <path
@@ -383,7 +383,7 @@
               </g>
             </g>
             <g
-               id="g8"
+               id="eye-close"
                inkscape:label="close"
                style="display:none;stroke-width:1.04005">
               <path
@@ -417,7 +417,7 @@
                sodipodi:nodetypes="zzz" />
           </g>
           <path
-             id="rect25600-7"
+             id="mouth-close"
              style="display:inline;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
              d="m 40.058766,36.486487 -1.140052,0.524708 -1.20289,-0.395407 1.20289,0.395407 z"
              sodipodi:nodetypes="ccccc" />
@@ -446,7 +446,7 @@
                sodipodi:nodetypes="czc" />
           </g>
           <g
-             id="g20-3"
+             id="mouth-open"
              inkscape:label="mouth"
              transform="matrix(-2.4523428,-0.10145217,-0.17343387,2.427883,132.53723,-34.725584)"
              style="display:none;stroke-width:1.04005">

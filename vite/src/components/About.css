@@ -3,7 +3,7 @@
 }
 
 .about * {
-	font-size: 1.25vmax;
+	font-size: max(1.25vw, 2vh);
 }
 
 .about h3 {
@@ -15,4 +15,8 @@
 .about a:hover {
 	cursor: pointer;
 	filter: brightness(80%);
+}
+
+.about img {
+	width: 25vw;
 }

@@ -29,15 +29,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="4.6280798"
-     inkscape:cx="120.13622"
-     inkscape:cy="216.18037"
+     inkscape:zoom="3.6181299"
+     inkscape:cx="122.43894"
+     inkscape:cy="170.94466"
      inkscape:window-width="1920"
      inkscape:window-height="1004"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g15"
+     inkscape:current-layer="g35479"
      showgrid="false" />
   <defs
      id="defs1">
@@ -492,8 +492,8 @@
           </g>
           <path
              id="mouth-close"
-             style="display:none;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-             d="m 40.260515,36.570558 -1.341801,0.440637 -1.324572,-0.244266 1.324572,0.244266 z"
+             style="display:inline;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+             d="m 40.075675,36.522265 -1.156961,0.48893 -1.115503,-0.348688 1.115503,0.348688 z"
              sodipodi:nodetypes="ccccc" />
           <ellipse
              style="display:none;fill:#2d1f15;fill-opacity:1;stroke-width:0.10319"
@@ -523,7 +523,7 @@
              id="mouth-open"
              inkscape:label="mouth"
              transform="matrix(-2.4523428,-0.10145217,-0.17343387,2.427883,132.53723,-34.725584)"
-             style="display:inline;stroke-width:1.04005">
+             style="display:none;stroke-width:1.04005">
             <path
                id="path18-5"
                style="fill:#000000;fill-opacity:1;stroke-width:0.529;stroke-linecap:square;stroke-miterlimit:1.5;paint-order:fill markers stroke"

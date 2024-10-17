@@ -3,7 +3,7 @@ import "./About.css";
 import { multiPartialRandomColor } from "../helper/color";
 
 function About() {
-	const [colors] = useState(multiPartialRandomColor(5));
+	const [colors] = useState(multiPartialRandomColor(6));
 
 	return <div className="about">
 		<h3>What is this?</h3>
@@ -26,6 +26,14 @@ function About() {
 			If you are interested in my profile, you can <a style={{ color: colors[4] }} href="https://stat.ink/@NorthWestWind/spl3">check it out here</a>.
 			The backend behind this website is just adding new match data every 5 minutes, and the website will update accordingly.
 		</p>
+
+		<h3>Who is she?</h3>
+		<div className="flex vcenter">
+			<img src="/integrelle/undercover.svg" />
+			<p>
+				You mean her? This is <span style={{ color: colors[5] }}>Integrelle</span>! Our beloved Brella-playing inkling girl.
+			</p>
+		</div>
 	</div>
 }
 

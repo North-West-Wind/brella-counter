@@ -2,10 +2,10 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import Brella from "./Brella";
 import "./BrellaColumn.css";
 import { partialRandomColor } from "../helper/color";
-import { multiRandomBoolean, randomBoolean } from "../helper/math";
+import { multiRandomBoolean } from "../helper/math";
 import { SVG } from "@svgdotjs/svg.js";
 
-function BrellaColumn(props: { brellas: string[], integrelle: string, integrelleOptions?: { eyeOpen?: boolean, mouthOpen?: boolean } }) {
+function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	const [horizontal, setHorizontal] = useState(globalThis.window.innerWidth > globalThis.window.innerHeight);
 	const [color] = useState(partialRandomColor());
 	const [svg, setSvg] = useState("");
@@ -13,7 +13,7 @@ function BrellaColumn(props: { brellas: string[], integrelle: string, integrelle
 	useEffect(() => {
 		fetch(`/integrelle/${props.integrelle}.svg`).then(async res => {
 			if (res.ok) {
-				const [eyeOpen, mouthOpen] = props.integrelleOptions ? [props.integrelleOptions.eyeOpen ?? randomBoolean(), props.integrelleOptions.mouthOpen ?? randomBoolean()] : multiRandomBoolean(2);
+				const [eyeOpen, mouthOpen] = multiRandomBoolean(2);
 				console.log(`for integrelle ${props.integrelle}:`, eyeOpen, mouthOpen);
 				const draw = SVG();
 				draw.svg(await res.text());

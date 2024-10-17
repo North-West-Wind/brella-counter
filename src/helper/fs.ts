@@ -2,7 +2,7 @@ import type { Buffer } from "node:buffer";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const RUNTIME_DIR = Deno.env.get("RUNTIME_DIR") || "work";
+const RUNTIME_DIR = process.env.RUNTIME_DIR || "work";
 
 export function ensureRuntimeDir() {
 	fs.mkdirSync("./work", { recursive: true });

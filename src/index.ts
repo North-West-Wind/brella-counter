@@ -1,11 +1,12 @@
 // @deno-types="npm:@types/node-cron"
-import cron from "npm:node-cron";
+import cron from "node-cron";
 // @deno-types="npm:@types/express"
-import express from "npm:express";
+import express from "express";
 import { recalibrate, resetDay, updateMatches } from "./helper/observer.ts";
 import { analytics, state, todayBrellas, todayGames } from "./store.ts";
 import { ensureRuntimeDir } from "./helper/fs.ts";
 import path from "node:path";
+import "dotenv/config";
 
 // initialize
 ensureRuntimeDir();
@@ -42,4 +43,4 @@ app.get("/api/today", (_req, res) => {
 	})
 });
 
-app.listen(Deno.env.get("PORT") || 3000, () => console.log("Server is listening"));
+app.listen(process.env.PORT || 3000, () => console.log("Server is listening"));

@@ -4,7 +4,7 @@ import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze.ts
 import { appendToTextFile } from "./fs.ts";
 import { safeOkState } from "./state.ts";
 
-const USER = Deno.env.get("USER") || "NorthWestWind";
+const USER = process.env.USER || "NorthWestWind";
 
 function sleep(ms: number) {
 	return new Promise(res => setTimeout(res, ms));

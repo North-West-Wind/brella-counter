@@ -22,15 +22,6 @@ async function updateAnalytics() {
     });
     globalThis.window.dispatchEvent(new Event("custom:update-today"));
   }
-  // testing
-  /*const original = analytics()!;
-  original.totalGames += Math.floor(Math.random() * 3);
-  original.totalBrellas += Math.min(Math.floor(Math.random() * 3), original.totalGames - original.totalBrellas);
-  for (const key in original.specifics) {
-    (original.specifics as any)[key] += Math.floor(Math.random() * 3);
-  }
-  analytics(original);
-  globalThis.window.dispatchEvent(new Event("custom:update-analytics"));*/
 }
 
 function App() {
@@ -45,9 +36,9 @@ function App() {
     <>
       <h1 className='unimportant'>NorthWestWind's Brella Counter</h1>
       <TodayStats />
+      <BrellaStats />
       <TotalStats />
       <TeamStats />
-      <BrellaStats />
       <About />
     </>
   )

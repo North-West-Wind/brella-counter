@@ -19,7 +19,7 @@ function TodayStats() {
 	
 	return <h2>
 		<span className="number">Today's Brella Rate: </span>
-		<span className="number" style={{ color }}>{brellaCount / gameCount}</span>
+		<span className="number" style={{ color }}>{(brellaCount / gameCount).toPrecision(4)}</span>
 		<span className="hint"> ({brellaCount}/{gameCount})</span>
 	</h2>
 }

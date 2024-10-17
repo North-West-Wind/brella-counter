@@ -1,11 +1,11 @@
 import { createReadStream } from "node:fs";
 import moment from "moment";
 import { createInterface } from "node:readline";
-import { getRuntimePath, saveToTextFile } from "./fs.ts";
+import { getRuntimePath, saveToTextFile } from "./fs";
 import { Buffer } from "node:buffer";
-import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common.ts";
+import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common";
 import { existsSync } from "node:fs";
-import { todayBrellas, todayGames } from "../store.ts";
+import { todayBrellas, todayGames } from "../store";
 
 export function analyzeFile() {
 	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
@@ -23,7 +23,7 @@ export function analyzeFile() {
 			const json = JSON.parse(line);
 			lastBattleId = json.id;
 			if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
-			analyzeSingleBattle(analytics, json, false);
+			analyzeSingleBattle(analytics, json);
 		});
 		lineReader.on("close", () => {
 			analytics.firstRecord = moment.utc(startDate * 1000).format("YYYY-MM-DD HH:mm:ss");
@@ -43,8 +43,9 @@ export function analyzeFile() {
 	});
 }
 
-export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike, today: boolean) {
+export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike) {
 	analytics.totalGames++;
+	const today = moment.unix(splatlog.start_at.time).isSame(new Date(), "day");
 	if (today) todayGames((todayGames() || 0) + 1);
 	const our = splatlog.our_team_members;
 	our.forEach((member: Member) => {

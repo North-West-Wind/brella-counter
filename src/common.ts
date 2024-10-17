@@ -74,7 +74,7 @@ export function defaultBrellas() {
 
 export type SplatlogLike = {
 	id: string,
-	start_at: { time: string },
+	start_at: { time: number },
 	our_team_members: Member[],
 	their_team_members: Member[],
 	third_team_members: Member[],

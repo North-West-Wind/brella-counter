@@ -1,4 +1,4 @@
-import { defaultAnalytics, State, type Analytics } from "./common.ts";
+import { defaultAnalytics, State, type Analytics } from "./common";
 
 const internal: {
 	lastBattleId: string,

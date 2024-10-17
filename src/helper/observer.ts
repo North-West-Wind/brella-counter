@@ -1,10 +1,10 @@
-import { State, type SplatlogLike } from "../common.ts";
-import { analytics, lastBattleId, state, todayBrellas, todayGames } from "../store.ts";
-import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze.ts";
-import { appendToTextFile } from "./fs.ts";
-import { safeOkState } from "./state.ts";
+import { State, type SplatlogLike } from "../common";
+import { analytics, lastBattleId, state, todayBrellas, todayGames } from "../store";
+import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze";
+import { appendToTextFile } from "./fs";
+import { safeOkState } from "./state";
 
-const USER = process.env.USER || "NorthWestWind";
+const USER = process.env.STAT_USER || "NorthWestWind";
 
 function sleep(ms: number) {
 	return new Promise(res => setTimeout(res, ms));
@@ -26,8 +26,9 @@ export async function updateMatches() {
 		let count = 0;
 		const stack: string[] = [];
 		while (running) {
-			console.log("Fetching page", page);
 			let first = true;
+			const pageUrl = url + `?page=${page}`;
+			console.log(`Fetching page ${page} with url ${pageUrl}`);
 			const res = await fetch(url + `?page=${page}`);
 			if (!res.ok) {
 				if (retries >= 5) throw new Error("probably rate limited");
@@ -52,7 +53,7 @@ export async function updateMatches() {
 						break;
 					}
 					console.log(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
-					analyzeSingleBattle(stored, splatlog, true);
+					analyzeSingleBattle(stored, splatlog);
 					stack.push(JSON.stringify(simplifySplatlog(splatlog)));
 				}
 				page++;

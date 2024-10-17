@@ -2,9 +2,9 @@
 import cron from "node-cron";
 // @deno-types="npm:@types/express"
 import express from "express";
-import { recalibrate, resetDay, updateMatches } from "./helper/observer.ts";
-import { analytics, state, todayBrellas, todayGames } from "./store.ts";
-import { ensureRuntimeDir } from "./helper/fs.ts";
+import { recalibrate, resetDay, updateMatches } from "./helper/observer";
+import { analytics, state, todayBrellas, todayGames } from "./store";
+import { ensureRuntimeDir } from "./helper/fs";
 import path from "node:path";
 import "dotenv/config";
 

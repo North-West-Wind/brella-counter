@@ -1,5 +1,5 @@
-import { State } from "../common.ts";
-import { state } from "../store.ts";
+import { State } from "../common";
+import { state } from "../store";
 
 export function safeOkState(original: State) {
 	const current = state();

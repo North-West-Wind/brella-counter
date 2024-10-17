@@ -29,11 +29,11 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="4.7784558"
-     inkscape:cx="82.244143"
-     inkscape:cy="175.57973"
-     inkscape:window-width="1440"
-     inkscape:window-height="824"
+     inkscape:zoom="2.5426681"
+     inkscape:cx="45.228081"
+     inkscape:cy="155.93856"
+     inkscape:window-width="1920"
+     inkscape:window-height="1004"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -419,7 +419,7 @@
           <path
              id="mouth-close"
              style="display:inline;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-             d="m 40.058766,36.486487 -1.140052,0.524708 -1.20289,-0.395407 1.20289,0.395407 z"
+             d="m 39.987862,36.49067 -1.140052,0.524708 -1.20289,-0.395407 1.20289,0.395407 z"
              sodipodi:nodetypes="ccccc" />
           <ellipse
              style="display:none;fill:#2d1f15;fill-opacity:1;stroke-width:0.10319"

@@ -57,7 +57,7 @@ export async function updateMatches() {
 			}
 		}
 		console.log(`Adding ${count} new entries to stats.json`);
-		appendToTextFile("stats.json", stack.reverse().join("\n") + "\n");
+		appendToTextFile("stats.json", stack.reverse().join("\n"));
 		safeOkState(State.UPDATING);
 	} catch (err) {
 		console.error(err);

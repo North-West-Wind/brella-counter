@@ -13,8 +13,8 @@ function TodayStats() {
 			setGameCount(today().games);
 		};
 
-		globalThis.window.addEventListener("custom:update-analytics", update);
-		() => globalThis.window.removeEventListener("custom:update-analytics", update);
+		globalThis.window.addEventListener("custom:update-today", update);
+		() => globalThis.window.removeEventListener("custom:update-today", update);
 	}, []);
 	
 	return <h2>

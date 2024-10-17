@@ -1,3 +1,4 @@
+// @deno-types="npm:@types/node-cron"
 import cron from "npm:node-cron";
 // @deno-types="npm:@types/express"
 import express from "npm:express";

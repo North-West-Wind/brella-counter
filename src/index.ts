@@ -10,7 +10,7 @@ import "dotenv/config";
 
 // initialize
 ensureRuntimeDir();
-await recalibrate();
+recalibrate();
 
 // every 5 minutes
 cron.schedule("*/5 * * * *", updateMatches);
@@ -23,7 +23,7 @@ cron.schedule("0 0 1 * *", recalibrate);
 
 // express server setup
 const app = express();
-app.use(express.static(path.join(import.meta.dirname!, "../public")));
+app.use(express.static(path.join(__dirname, "../public")));
 app.get("/", (_req, res) => {
 	res.send("index.html");
 });

@@ -13,8 +13,11 @@ import { readdirSync } from "node:fs";
 ensureRuntimeDir();
 recalibrate();
 
-// every 5 minutes
-cron.schedule("*/5 * * * *", updateMatches);
+// env
+const UPDATE_INTERVAL = parseInt(process.env.UPDATE_INTERVAL || "300000"); // in milliseconds
+
+// every {UPDATE_INTERVAL} fetch matches
+setInterval(updateMatches, UPDATE_INTERVAL);
 
 // every day
 cron.schedule("0 0 * * *", resetDay);

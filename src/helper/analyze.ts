@@ -18,12 +18,19 @@ export function analyzeFile() {
 		let lastBattleId = "";
 		const inputStream = createReadStream(getRuntimePath("stats.json"));
 		const lineReader = createInterface({ input: inputStream, terminal: false });
+		let lineCount = 0;
 		lineReader.on("line", line => {
+			lineCount++;
 			if (!line) return;
-			const json = JSON.parse(line);
-			lastBattleId = json.id;
-			if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
-			analyzeSingleBattle(analytics, json);
+			try {
+				const json = JSON.parse(line);
+				lastBattleId = json.id;
+				if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
+				analyzeSingleBattle(analytics, json);
+			} catch (err) {
+				console.log(`Error on line ${lineCount} when analyzing file`);
+				console.error(err);
+			}
 		});
 		lineReader.on("close", () => {
 			analytics.firstRecord = moment.utc(startDate * 1000).format("YYYY-MM-DD HH:mm:ss");

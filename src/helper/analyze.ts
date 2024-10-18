@@ -88,7 +88,7 @@ export function simplifySplatlog(splatlog: SplatlogLike) {
 		start_at: { time: splatlog.start_at.time },
 		our_team_members: splatlog.our_team_members.map(simplifyMember),
 		their_team_members: splatlog.their_team_members.map(simplifyMember),
-		third_team_members: splatlog.third_team_members.map(simplifyMember)
+		third_team_members: splatlog.third_team_members?.map(simplifyMember)
 	};
 }
 

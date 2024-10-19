@@ -15,7 +15,6 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 		fetch(`/integrelle/${props.integrelle}.svg`).then(async res => {
 			if (res.ok) {
 				const [eyeOpen, mouthOpen] = multiRandomBoolean(2);
-				console.log(`for integrelle ${props.integrelle}:`, eyeOpen, mouthOpen);
 				const draw = SVG();
 				draw.svg(await res.text());
 				draw.find("#eye-open").forEach(item => item.css({ display: eyeOpen ? "inline" : "none" }));

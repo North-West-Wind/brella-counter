@@ -6,6 +6,7 @@ import TotalStats from './components/TotalStats.tsx';
 import About from './components/About.tsx';
 import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
+import Background from './components/Background.tsx';
 
 async function updateAnalytics() {
   let res = await fetch("/api/analytics");
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <>
+      <Background />
       <h1 className='unimportant'>NorthWestWind's Brella Counter</h1>
       <TodayStats />
       <BrellaStats />

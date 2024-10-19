@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { multiPartialRandomColor, partialRandomColor } from "../helper/color";
+import { useDark } from "./useDark";
 
 export function useColors(size: number) {
-	const systemPrefersDark = useMediaQuery({ query: "(prefers-color-scheme: dark)" }, undefined, prefersDark => { setIsDark(prefersDark); });
-	const [isDark, setIsDark] = useState(systemPrefersDark);
+	const isDark = useDark();
 	const [colors, setColors] = useState(multiPartialRandomColor(size, !isDark));
 
 	useEffect(() => {

@@ -9,21 +9,13 @@ import { readdirSync, readFileSync } from "node:fs";
 import sirv from "sirv";
 import compression from "compression";
 import { isbot } from "isbot";
+import { render } from "../ssr";
 
 // initialize
 ensureRuntimeDir();
 recalibrate();
-const STATIC_CONFIG: { [key: string]: string | (() => string) } = {
-	title: "Brella Counter",
-	url: "https://brella.northwestw.in",
-	image: () => {
-		const files = readdirSync(path.join(__dirname, "../public/integrelle/png")).filter(file => file.endsWith(".png"));
-		return `/integrelle/png/${files[Math.floor(Math.random() * files.length)]}`;
-	},
-	author: "NorthWestWind",
-	twitterCreator: "@NorthWestWindNW"
-};
-const STATIC_TEMPLATE = readFileSync(path.join(__dirname, "../public/static.html"), "utf8");
+const TEMPLATE_HTML = readFileSync("./dist/index.html", "utf8");
+const SSR_MANIFEST = readFileSync('./dist/client/.vite/ssr-manifest.json', "utf8");
 
 // env
 const UPDATE_INTERVAL = parseInt(process.env.UPDATE_INTERVAL || "300000"); // in milliseconds
@@ -41,8 +33,13 @@ cron.schedule("0 0 1 * *", recalibrate);
 const app = express();
 
 app.use(compression());
-app.use("/", sirv(path.join(__dirname, "../public"), { extensions: [] }))
-app.get("/", (req, res) => {
+app.use("/", sirv("./public", { extensions: [] }));
+app.use("/", sirv("./dist/client", { extensions: [] }));
+app.get("/", async (req, res) => {
+	let template = TEMPLATE_HTML;
+	let render = (require("./dist/server/ssr.js")).render;
+
+	const rendered = await render(template)
 	if (isbot(req.get("user-agent"))) {
 		let html = STATIC_TEMPLATE;
 		for (const key in STATIC_CONFIG) {

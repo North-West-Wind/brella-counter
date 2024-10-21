@@ -13,10 +13,13 @@ import { isbot } from "isbot";
 // initialize
 ensureRuntimeDir();
 recalibrate();
-const STATIC_CONFIG: { [key: string]: string } = {
+const STATIC_CONFIG: { [key: string]: string | (() => string) } = {
 	title: "Brella Counter",
 	url: "https://brella.northwestw.in",
-	image: "/random-integrelle",
+	image: () => {
+		const files = readdirSync(path.join(__dirname, "../public/integrelle/png")).filter(file => file.endsWith(".png"));
+		return `/integrelle/png/${files[Math.floor(Math.random() * files.length)]}`;
+	},
 	author: "NorthWestWind",
 	twitterCreator: "@NorthWestWindNW"
 };
@@ -43,7 +46,8 @@ app.get("/", (req, res) => {
 	if (isbot(req.get("user-agent"))) {
 		let html = STATIC_TEMPLATE;
 		for (const key in STATIC_CONFIG) {
-			html = html.replace(new RegExp(`\\{${key}\\}`, "g"), STATIC_CONFIG[key]);
+			const prop = STATIC_CONFIG[key];
+			html = html.replace(new RegExp(`\\{${key}\\}`, "g"), typeof prop === "string" ? prop : prop());
 		}
 		const stored = analytics();
 		const {

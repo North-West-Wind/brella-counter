@@ -14,9 +14,9 @@ function About() {
 			<span style={{ color: colors[0] }}>At the top of the page is today's Brella rate. </span> 
 			As I play at least 2 hours of Splatoon 3 every day on stream, I would like to know how many Brella players I have seen today.
 			The "rate" is simply the amount of Brella players divided by the amount of games of the day. Note that this is not counting myself.
-			<span style={{ color: colors[1] }}> Next line is the total count of Brella players I have matched with and games I have played. </span>
-			<span style={{ color: colors[2] }}>Followed by that is on which team did those players appear on. </span>
-			The 4 columns after that (or 4 rows on mobile) is the <span style={{ color: colors[3] }}>count of individual Brella types spotted.</span>
+			The 4 columns after that (or 4 rows on mobile) is the <span style={{ color: colors[1] }}>count of individual Brella types spotted.</span>
+			<span style={{ color: colors[2] }}> Followed by that is the total count of Brella players I have matched with and games I have played, </span>
+			and <span style={{ color: colors[3] }}>how many of them appeared on which team.</span>
 		</p>
 
 		<h3>How is this possible?</h3>

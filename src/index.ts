@@ -1,17 +1,26 @@
-// @deno-types="npm:@types/node-cron"
 import cron from "node-cron";
-// @deno-types="npm:@types/express"
 import express from "express";
 import { recalibrate, resetDay, updateMatches } from "./helper/observer";
 import { analytics, state, todayBrellas, todayGames } from "./store";
 import { ensureRuntimeDir } from "./helper/fs";
 import path from "node:path";
 import "dotenv/config";
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import sirv from "sirv";
+import compression from "compression";
+import { isbot } from "isbot";
 
 // initialize
 ensureRuntimeDir();
 recalibrate();
+const STATIC_CONFIG: { [key: string]: string } = {
+	title: "Brella Counter",
+	url: "https://brella.northwestw.in",
+	image: "/random-integrelle",
+	author: "NorthWestWind",
+	twitterCreator: "@NorthWestWindNW"
+};
+const STATIC_TEMPLATE = readFileSync(path.join(__dirname, "../public/static.html"), "utf8");
 
 // env
 const UPDATE_INTERVAL = parseInt(process.env.UPDATE_INTERVAL || "300000"); // in milliseconds
@@ -27,9 +36,37 @@ cron.schedule("0 0 1 * *", recalibrate);
 
 // express server setup
 const app = express();
-app.use(express.static(path.join(__dirname, "../public")));
-app.get("/", (_req, res) => {
-	res.send("index.html");
+
+app.use(compression());
+app.use("/", sirv(path.join(__dirname, "../public"), { extensions: [] }))
+app.get("/", (req, res) => {
+	if (isbot(req.get("user-agent"))) {
+		let html = STATIC_TEMPLATE;
+		for (const key in STATIC_CONFIG) {
+			html = html.replace(new RegExp(`\\{${key}\\}`, "g"), STATIC_CONFIG[key]);
+		}
+		const stored = analytics();
+		const {
+			spygadget,
+			spygadget_sorella,
+			parashelter,
+			parashelter_sorella,
+			order_shelter_replica,
+			campingshelter,
+			campingshelter_sorella,
+			brella24mk1,
+			brella24mk2,
+		} = stored.specifics;
+		const brellas = todayBrellas();
+		const games = todayGames();
+		const description =
+		`Today's Brella Rate: ${(brellas / games).toPrecision(4)} (${brellas} / ${games})
+		Total: ${stored.totalBrellas} / ${stored.totalGames} (${stored.ourBrellas} vs ${stored.otherBrellas})
+		Specifics: [${spygadget}, ${spygadget_sorella}, ${parashelter}, ${parashelter_sorella}, ${order_shelter_replica}, ${campingshelter}, ${campingshelter_sorella}, ${brella24mk1}, ${brella24mk2}]
+		(order: v/s under, v/s/order brella, v/s tent, recycled I/II)`
+		html = html.replace(/\{description\}/g, description);
+		res.send(html);
+	} else res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 app.get("/api", (_req, res) => {

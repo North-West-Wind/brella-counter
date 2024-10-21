@@ -418,7 +418,7 @@
           </g>
           <path
              id="mouth-close"
-             style="display:inline;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+             style="display:none;fill:#fcaa73;stroke:#fcaa73;stroke-width:0.233005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
              d="m 39.987862,36.49067 -1.140052,0.524708 -1.20289,-0.395407 1.20289,0.395407 z"
              sodipodi:nodetypes="ccccc" />
           <ellipse
@@ -449,7 +449,7 @@
              id="mouth-open"
              inkscape:label="mouth"
              transform="matrix(-2.4523428,-0.10145217,-0.17343387,2.427883,132.53723,-34.725584)"
-             style="display:none;stroke-width:1.04005">
+             style="display:inline;stroke-width:1.04005">
             <path
                id="path18-5"
                style="fill:#000000;fill-opacity:1;stroke-width:0.529;stroke-linecap:square;stroke-miterlimit:1.5;paint-order:fill markers stroke"

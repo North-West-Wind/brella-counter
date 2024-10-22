@@ -9,7 +9,7 @@ import { useHorizontal } from "../hooks/useHorizontal";
 function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	const horizontal = useHorizontal();
 	const color = useColor();
-	const [svg, setSvg] = useState("");
+	const [svg, setSvg] = useState(`/integrelle/${props.integrelle}.svg`);
 
 	useEffect(() => {
 		fetch(`/integrelle/${props.integrelle}.svg`).then(async res => {

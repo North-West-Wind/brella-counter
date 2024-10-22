@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { multiPartialRandomColor, partialRandomColor } from "../helper/color";
 import { useDark } from "./useDark";
 
 export function useColors(size: number) {
 	const isDark = useDark();
-	const [colors, setColors] = useState(multiPartialRandomColor(size, !isDark));
+	const [colors, setColors] = useState(Array(size).fill("#7f7f7f"));
+
+	useEffect(() => {
+		setColors(multiPartialRandomColor(size, !isDark));
+	}, []);
 
 	useEffect(() => {
 		setColors(multiPartialRandomColor(size, !isDark));
@@ -15,9 +18,12 @@ export function useColors(size: number) {
 }
 
 export function useColor() {
-	const systemPrefersDark = useMediaQuery({ query: "(prefers-color-scheme: dark)" }, undefined, prefersDark => { setIsDark(prefersDark); });
-	const [isDark, setIsDark] = useState(systemPrefersDark);
-	const [color, setColor] = useState(partialRandomColor(!isDark));
+	const isDark = useDark();
+	const [color, setColor] = useState("#7f7f7f");
+
+	useEffect(() => {
+		setColor(partialRandomColor(!isDark));
+	}, []);
 
 	useEffect(() => {
 		setColor(partialRandomColor(!isDark));

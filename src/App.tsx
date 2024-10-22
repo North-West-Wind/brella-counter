@@ -7,7 +7,6 @@ import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
 import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
-import { setSeed } from './helper/color.ts';
 
 export type { Brellas };
 
@@ -54,22 +53,20 @@ export function today(ne?: Today) {
 	return internal.today;
 }
 
-function App(props: { analytics?: Analytics, today?: Today, seed?: number }) {
-	if (!props.analytics && !props.today && props.seed === undefined) {
+function App(props: { analytics?: Analytics, today?: Today }) {
+	if (!props.analytics && !props.today) {
 		// used by client to get server data
 		const root = document.getElementById("root")!;
 		const data = root.getAttribute("data-server");
 		if (data) {
-			const { analytics: an, today: to, seed: se } = JSON.parse(data);
+			const { analytics: an, today: to } = JSON.parse(data);
 			analytics(an);
 			today(to);
-      setSeed(se);
 		}
 	} else {
 		// used by server when we directly pass data
 		if (props.analytics) analytics(props.analytics);
 		if (props.today) today(props.today);
-    if (props.seed) setSeed(props.seed);
 	}
 
   useEffect(() => {

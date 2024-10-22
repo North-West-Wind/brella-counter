@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Brella from "./Brella";
 import "./BrellaColumn.css";
-import { multiRandomBoolean } from "../helper/math";
+import { multiRandomBoolean, randomBetween } from "../helper/math";
 import { SVG } from "@svgdotjs/svg.js";
 import { useColor } from "../hooks/useColors";
 import { useHorizontal } from "../hooks/useHorizontal";
@@ -9,11 +9,12 @@ import { useHorizontal } from "../hooks/useHorizontal";
 function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	const horizontal = useHorizontal();
 	const color = useColor();
-	const [svg, setSvg] = useState("");
+	const [svg, setSvg] = useState(`/integrelle/${props.integrelle}.svg`);
 
 	useEffect(() => {
 		fetch(`/integrelle/${props.integrelle}.svg`).then(async res => {
 			if (res.ok) {
+				await new Promise(res => setTimeout(res, randomBetween(500, 1500, true)));
 				const [eyeOpen, mouthOpen] = multiRandomBoolean(2);
 				const draw = SVG();
 				draw.svg(await res.text());

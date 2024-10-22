@@ -102,6 +102,10 @@ button:focus-visible {
   text-align: center;
 }
 
+h2, span {
+  transition: color .5s ease;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -135,6 +139,6 @@ button:focus-visible {
   margin: 0 1vw;
 }
 
-h1.unimportant {
+h1.unimportant, h2.unimportant {
   opacity: 0.5;
 }

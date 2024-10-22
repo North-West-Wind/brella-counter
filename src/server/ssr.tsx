@@ -1,6 +1,6 @@
 import { renderToString } from "react-dom/server";
-import App, { analytics } from "../App";
-import { todayBrellas, todayGames } from "./store";
+import App from "../App";
+import { analytics, todayBrellas, todayGames } from "./store";
 import { readdirSync } from "fs";
 
 const STATIC_CONFIG: { [key: string]: string | (() => string) } = {

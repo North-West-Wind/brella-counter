@@ -10,7 +10,7 @@ const config: UserConfig = {
 };
 
 if (process.env.BUILD_SERVER) {
-  config.build!.ssr = resolve(__dirname, "src/server/index.tsx");
+  config.build!.ssr = resolve(__dirname, "src/server/index.ts");
   config.build!.outDir = "./dist/server";
 } else {
   config.build!.ssrManifest = true;

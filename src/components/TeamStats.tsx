@@ -20,9 +20,9 @@ function TeamStats() {
 	
 	return <h2>
 		<span className="hint">(Our) </span>
-		<span className="number" style={{ color: ourColor }}>{ourCount}</span>
+		<span className="number colored" style={{ color: ourColor }}>{ourCount}</span>
 		<span className="number"> vs </span>
-		<span className="number" style={{ color: otherColor }}>{otherCount}</span>
+		<span className="number colored" style={{ color: otherColor }}>{otherCount}</span>
 		<span className="hint"> (Other)</span>
 	</h2>
 }

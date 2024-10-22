@@ -33,7 +33,8 @@ app.use(compression());
 app.use("/", sirv("./public", { extensions: [] }));
 app.use("/", sirv("./dist/client", { extensions: [] }));
 app.get("/", (_req, res) => {
-	res.send(render(TEMPLATE_HTML));
+	const seed = Date.now() ^ (Math.random() * 0x100000000);
+	res.send(render(TEMPLATE_HTML, seed));
 });
 
 app.get("/api", (_req, res) => {

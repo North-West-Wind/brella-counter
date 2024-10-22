@@ -20,9 +20,9 @@ function TotalStats() {
 	
 	return <h2>
 		<span className="hint">(Brellas) </span>
-		<span className="number" style={{ color: brellaColor }}>{brellaCount}</span>
+		<span className="number colored" style={{ color: brellaColor }}>{brellaCount}</span>
 		<span className="number"> | </span>
-		<span className="number" style={{ color: gameColor }}>{gameCount}</span>
+		<span className="number colored" style={{ color: gameColor }}>{gameCount}</span>
 		<span className="hint"> (Games)</span>
 	</h2>
 }

@@ -18,7 +18,7 @@ function Brella(props: { brella: string }) {
 
 	return <div className={"brella " + (horizontal ? "hori" : "vert")}>
 		<img src={`/brellas/${props.brella}.png`} />
-		<h2 className="number">{brellaCount}</h2>
+		<h2 className="number colored">{brellaCount}</h2>
 	</div>
 }
 

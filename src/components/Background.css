@@ -5,6 +5,8 @@
 	left: 0;
 	top: 0;
 	z-index: -1;
+	opacity: 1;
+	transition: opacity .5s ease;
 }
 
 .background img {
@@ -15,4 +17,8 @@
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.background.hidden {
+	opacity: 0;
 }

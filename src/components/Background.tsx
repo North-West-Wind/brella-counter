@@ -36,9 +36,8 @@ function Background() {
 		setBg(canvas.toDataURL());
 	}, [isDark]);
 
-	if (!bg) return <></>;
-	return <div className="background">
-		<img src={bg} />
+	return <div className={"background" + (bg ? "" : " hidden")}>
+		{bg && <img src={bg} />}
 	</div>
 }
 

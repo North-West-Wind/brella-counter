@@ -9,7 +9,7 @@ function Brella(props: { brella: string }) {
 
 	useEffect(() => {
 		const update = () => {
-			setBrellaCount(analytics().specifics[props.brella as keyof Brellas] || 0);
+			setBrellaCount(analytics().specifics[props.brella as keyof Brellas]);
 		};
 
 		globalThis.window.addEventListener("custom:update-analytics", update);

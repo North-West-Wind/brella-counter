@@ -3,8 +3,8 @@ import { today } from "../App";
 import { useColor } from "../hooks/useColors";
 
 function TodayStats() {
-	const [brellaCount, setBrellaCount] = useState(today().brellas || 0);
-	const [gameCount, setGameCount] = useState(today().games || 0);
+	const [brellaCount, setBrellaCount] = useState(today().brellas);
+	const [gameCount, setGameCount] = useState(today().games);
 	const color = useColor();
 
 	useEffect(() => {

@@ -9,7 +9,7 @@ import { useHorizontal } from "../hooks/useHorizontal";
 function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	const horizontal = useHorizontal();
 	const color = useColor();
-	const [svg, setSvg] = useState(`/integrelle/${props.integrelle}.svg`);
+	const [svg, setSvg] = useState("");
 
 	useEffect(() => {
 		fetch(`/integrelle/${props.integrelle}.svg`).then(async res => {
@@ -27,13 +27,17 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 		});
 	}, []);
 
+	const integrelleWrapper = <div className={"integrelle " + (horizontal ? "hori" : "vert") + (svg ? "" : " hidden")}>
+		<img src={svg} />
+	</div>
+
 	return <div className={horizontal ? "flex-dist" : ""}>
 		<div className={horizontal ? "" : "flex vcenter"} style={{ color }}>
-			{!horizontal && svg && <img className="integrelle vert" src={svg} />}
+			{!horizontal && integrelleWrapper}
 			{props.brellas.map(brella => <Brella brella={brella} key={brella} />)}
 		</div>
 		{horizontal && <hr className="brella-hr" />}
-		{horizontal && svg && <img className="integrelle hori" src={svg} />}
+		{horizontal && integrelleWrapper}
 		
 	</div>
 }

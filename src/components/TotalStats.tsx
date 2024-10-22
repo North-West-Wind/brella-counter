@@ -4,8 +4,8 @@ import "./TotalStats.css";
 import { useColors } from "../hooks/useColors";
 
 function TotalStats() {
-	const [brellaCount, setBrellaCount] = useState(0);
-	const [gameCount, setGameCount] = useState(0);
+	const [brellaCount, setBrellaCount] = useState(analytics().totalBrellas);
+	const [gameCount, setGameCount] = useState(analytics().totalGames);
 	const [brellaColor, gameColor] = useColors(2);
 
 	useEffect(() => {

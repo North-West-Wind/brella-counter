@@ -4,7 +4,7 @@ import { analytics, Brellas } from "../App";
 import { useHorizontal } from "../hooks/useHorizontal";
 
 function Brella(props: { brella: string }) {
-	const [brellaCount, setBrellaCount] = useState(0);
+	const [brellaCount, setBrellaCount] = useState(analytics().specifics[props.brella as keyof Brellas]);
 	const horizontal = useHorizontal();
 
 	useEffect(() => {

@@ -6,6 +6,9 @@ import About from './components/About.tsx';
 import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
+import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
+
+export type { Brellas };
 
 async function updateAnalytics() {
   let res = await fetch("/api/analytics");
@@ -22,27 +25,6 @@ async function updateAnalytics() {
     });
     globalThis.window.dispatchEvent(new Event("custom:update-today"));
   }
-}
-
-export type Brellas = {
-	spygadget: number, // vunder
-	spygadget_sorella: number, // sunder
-	parashelter: number, // vbrella
-	parashelter_sorella: number, // sbrella
-	order_shelter_replica: number, // order brella
-	campingshelter: number, // vtent
-	campingshelter_sorella: number, // stent
-	brella24mk1: number, // recycled 1
-	brella24mk2: number, // recycled 2
-}
-
-export type Analytics = {
-	firstRecord: string,
-	totalGames: number,
-	totalBrellas: number,
-	ourBrellas: number,
-	otherBrellas: number,
-	specifics: Brellas
 }
 
 export type Today = {
@@ -71,32 +53,22 @@ export function today(ne?: Today) {
 	return internal.today;
 }
 
-function defaultAnalytics() {
-	return {
-		firstRecord: "",
-		totalGames: 0,
-		totalBrellas: 0,
-		ourBrellas: 0,
-		otherBrellas: 0,
-		specifics: defaultBrellas(),
-	} as Analytics;
-}
+function App(props: { analytics?: Analytics, today?: Today }) {
+	if (!props.analytics && !props.today) {
+		// used by client to get server data
+		const root = document.getElementById("root")!;
+		const data = root.getAttribute("data-server");
+		if (data) {
+			const { analytics: an, today: to } = JSON.parse(data);
+			analytics(an);
+			today(to);
+		}
+	} else {
+		// used by server when we directly pass data
+		if (props.analytics) analytics(props.analytics);
+		if (props.today) today(props.today);
+	}
 
-function defaultBrellas() {
-	return {
-		spygadget: 0, // vunder
-		spygadget_sorella: 0, // sunder
-		parashelter: 0, // vbrella
-		parashelter_sorella: 0, // sbrella
-		order_shelter_replica: 0, // order brella
-		campingshelter: 0, // vtent
-		campingshelter_sorella: 0, // stent
-		brella24mk1: 0, // recycled 1
-		brella24mk2: 0, // recycled 2
-	} as Brellas;
-}
-
-function App() {
   useEffect(() => {
     updateAnalytics();
     const timer = setInterval(updateAnalytics, 5000);

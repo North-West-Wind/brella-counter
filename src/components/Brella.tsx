@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Brella.css";
-import { analytics, Brellas } from "../main";
+import { analytics, Brellas } from "../App";
 import { useHorizontal } from "../hooks/useHorizontal";
 
 function Brella(props: { brella: string }) {

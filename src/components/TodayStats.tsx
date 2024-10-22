@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { today } from "../main";
+import { today } from "../App";
 import { useColor } from "../hooks/useColors";
 
 function TodayStats() {

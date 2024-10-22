@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { analytics } from "../main";
+import { analytics } from "../App";
 import "./TotalStats.css";
 import { useColors } from "../hooks/useColors";
 

@@ -5,14 +5,12 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "build-server": "tsc",
-    "build-vite": "touch public/vite && rm -r public/vite && cd vite && npm run build",
+    "start": "node dist/server/index.js",
     "deep-install": "npm i && cd vite && npm i",
-    "test": "ts-node src/index.ts",
-    "dev": "vite",
-    "build:client": "tsc -b && vite build",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build",
     "build:server": "BUILD_SERVER=1 vite build",
+    "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview"
   },

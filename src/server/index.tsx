@@ -8,14 +8,13 @@ import "dotenv/config";
 import { readdirSync, readFileSync } from "node:fs";
 import sirv from "sirv";
 import compression from "compression";
-import { isbot } from "isbot";
-import { render } from "../ssr";
+import { renderToString } from "react-dom/server";
+import App from "../App";
 
 // initialize
 ensureRuntimeDir();
 recalibrate();
-const TEMPLATE_HTML = readFileSync("./dist/index.html", "utf8");
-const SSR_MANIFEST = readFileSync('./dist/client/.vite/ssr-manifest.json', "utf8");
+const TEMPLATE_HTML = readFileSync("./dist/client/index.html", "utf8");
 
 // env
 const UPDATE_INTERVAL = parseInt(process.env.UPDATE_INTERVAL || "300000"); // in milliseconds
@@ -35,39 +34,31 @@ const app = express();
 app.use(compression());
 app.use("/", sirv("./public", { extensions: [] }));
 app.use("/", sirv("./dist/client", { extensions: [] }));
-app.get("/", async (req, res) => {
+app.get("/", (_req, res) => {
 	let template = TEMPLATE_HTML;
-	let render = (require("./dist/server/ssr.js")).render;
-
-	const rendered = await render(template)
-	if (isbot(req.get("user-agent"))) {
-		let html = STATIC_TEMPLATE;
-		for (const key in STATIC_CONFIG) {
-			const prop = STATIC_CONFIG[key];
-			html = html.replace(new RegExp(`\\{${key}\\}`, "g"), typeof prop === "string" ? prop : prop());
-		}
-		const stored = analytics();
-		const {
-			spygadget,
-			spygadget_sorella,
-			parashelter,
-			parashelter_sorella,
-			order_shelter_replica,
-			campingshelter,
-			campingshelter_sorella,
-			brella24mk1,
-			brella24mk2,
-		} = stored.specifics;
-		const brellas = todayBrellas();
-		const games = todayGames();
-		const description =
-		`Today's Brella Rate: ${(brellas / games).toPrecision(4)} (${brellas} / ${games})
-		Total: ${stored.totalBrellas} / ${stored.totalGames} (${stored.ourBrellas} vs ${stored.otherBrellas})
-		Specifics: [${spygadget}, ${spygadget_sorella}, ${parashelter}, ${parashelter_sorella}, ${order_shelter_replica}, ${campingshelter}, ${campingshelter_sorella}, ${brella24mk1}, ${brella24mk2}]
-		(order: v/s under, v/s/order brella, v/s tent, recycled I/II)`
-		html = html.replace(/\{description\}/g, description);
-		res.send(html);
-	} else res.sendFile(path.join(__dirname, "../public/index.html"));
+	const stored = analytics();
+	const {
+		spygadget,
+		spygadget_sorella,
+		parashelter,
+		parashelter_sorella,
+		order_shelter_replica,
+		campingshelter,
+		campingshelter_sorella,
+		brella24mk1,
+		brella24mk2,
+	} = stored.specifics;
+	const brellas = todayBrellas();
+	const games = todayGames();
+	const description =
+	`Today's Brella Rate: ${(brellas / games).toPrecision(4)} (${brellas} / ${games})
+	Total: ${stored.totalBrellas} / ${stored.totalGames} (${stored.ourBrellas} vs ${stored.otherBrellas})
+	Specifics: [${spygadget}, ${spygadget_sorella}, ${parashelter}, ${parashelter_sorella}, ${order_shelter_replica}, ${campingshelter}, ${campingshelter_sorella}, ${brella24mk1}, ${brella24mk2}]
+	(order: v/s under, v/s/order brella, v/s tent, recycled I/II)`
+	template = template.replace(/\{description\}/g, description);
+	template = template.replace("<!--app-html-->", renderToString(<App />));
+	renderToString(<App />);
+	res.send(template);
 });
 
 app.get("/api", (_req, res) => {

@@ -7,7 +7,7 @@ import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
 import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
-import { setSeed } from './helper/math.ts';
+import { setSeed } from './helper/color.ts';
 
 export type { Brellas };
 

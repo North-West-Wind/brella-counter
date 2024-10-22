@@ -1,5 +1,13 @@
+import prand from "pure-rand";
+
+let rng = prand.xoroshiro128plus(Date.now() ^ (Math.random() * 0x100000000));
+
+export function setSeed(seed: number) {
+	rng = prand.xoroshiro128plus(seed);
+}
+
 export function randomBoolean() {
-	return Math.random() < 0.5;
+	return prand.unsafeUniformIntDistribution(0, 1, rng) == 1;
 }
 
 export function multiRandomBoolean(size: number): boolean[] {
@@ -7,7 +15,7 @@ export function multiRandomBoolean(size: number): boolean[] {
 }
 
 export function randomInt(min: number, max: number) {
-	return Math.round(Math.random() * (max - min)) + min;
+	return prand.unsafeUniformIntDistribution(min, max, rng);
 }
 
 export function randomBetween(min: number, max: number, int = false) {

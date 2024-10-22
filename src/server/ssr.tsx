@@ -41,14 +41,14 @@ export function renderMeta(html: string) {
 	return html.replace(/\{description\}/g, description);
 }
 
-export function renderData(html: string) {
-	return html.replace("{data}", JSON.stringify({ analytics: analytics(), today:{ brellas: todayBrellas(), games: todayGames() }  }));
+export function renderData(html: string, seed: number) {
+	return html.replace("{data}", JSON.stringify({ analytics: analytics(), today: { brellas: todayBrellas(), games: todayGames() }, seed }));
 }
 
-export function renderComponents(html: string) {
-	return html.replace("<!--app-html-->", renderToString(<App analytics={analytics()} today={{ brellas: todayBrellas(), games: todayGames() }} />));
+export function renderComponents(html: string, seed: number) {
+	return html.replace("<!--app-html-->", renderToString(<App analytics={analytics()} today={{ brellas: todayBrellas(), games: todayGames() }} seed={seed} />));
 }
 
-export function render(html: string) {
-	return renderComponents(renderData(renderMeta(html)));
+export function render(html: string, seed: number) {
+	return renderComponents(renderData(renderMeta(html), seed), seed);
 }

@@ -30,7 +30,7 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 	return <div className={horizontal ? "flex-dist" : ""}>
 		<div className={horizontal ? "" : "flex vcenter"} style={{ color }}>
 			{!horizontal && svg && <img className="integrelle vert" src={svg} />}
-			{props.brellas.map(brella => <Brella brella={brella} />)}
+			{props.brellas.map(brella => <Brella brella={brella} key={brella} />)}
 		</div>
 		{horizontal && <hr className="brella-hr" />}
 		{horizontal && svg && <img className="integrelle hori" src={svg} />}

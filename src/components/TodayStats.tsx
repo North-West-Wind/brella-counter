@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { today } from "../main";
+import { today } from "../App";
 import { useColor } from "../hooks/useColors";
 
 function TodayStats() {
-	const [brellaCount, setBrellaCount] = useState(0);
-	const [gameCount, setGameCount] = useState(0);
+	const [brellaCount, setBrellaCount] = useState(today().brellas || 0);
+	const [gameCount, setGameCount] = useState(today().games || 0);
 	const color = useColor();
 
 	useEffect(() => {

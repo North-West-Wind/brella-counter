@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { analytics } from "../main";
+import { analytics } from "../App";
 import "./TotalStats.css";
 import { useColors } from "../hooks/useColors";
 
 function TeamStats() {
-	const [ourCount, setOurCount] = useState(0);
-	const [otherCount, setOtherCount] = useState(0);
+	const [ourCount, setOurCount] = useState(analytics().ourBrellas);
+	const [otherCount, setOtherCount] = useState(analytics().otherBrellas);
 	const [ourColor, otherColor] = useColors(2);
 
 	useEffect(() => {

@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import './App.css'
 import BrellaStats from './components/BrellaStats.tsx';
-import { analytics, today } from './main.tsx';
 import TotalStats from './components/TotalStats.tsx';
 import About from './components/About.tsx';
 import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
+import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
+
+export type { Brellas };
 
 async function updateAnalytics() {
   let res = await fetch("/api/analytics");
@@ -25,7 +27,48 @@ async function updateAnalytics() {
   }
 }
 
-function App() {
+export type Today = {
+	brellas: number,
+	games: number
+}
+
+const internal: {
+	analytics: Analytics,
+	today: Today
+} = {
+	analytics: defaultAnalytics(),
+	today: {
+		brellas: 0,
+		games: 0
+	}
+};
+
+export function analytics(ne?: Analytics) {
+  if (ne !== undefined) internal.analytics = ne;
+  return internal.analytics;
+}
+
+export function today(ne?: Today) {
+	if (ne !== undefined) internal.today = ne;
+	return internal.today;
+}
+
+function App(props: { analytics?: Analytics, today?: Today }) {
+	if (!props.analytics && !props.today) {
+		// used by client to get server data
+		const root = document.getElementById("root")!;
+		const data = root.getAttribute("data-server");
+		if (data) {
+			const { analytics: an, today: to } = JSON.parse(data);
+			analytics(an);
+			today(to);
+		}
+	} else {
+		// used by server when we directly pass data
+		if (props.analytics) analytics(props.analytics);
+		if (props.today) today(props.today);
+	}
+
   useEffect(() => {
     updateAnalytics();
     const timer = setInterval(updateAnalytics, 5000);

@@ -1,14 +1,14 @@
-import prand from "pure-rand";
-import tinycolor from "tinycolor2";
+import Rand, { PRNG } from "rand-seed";
+import { TinierColor } from "./tinier-color";
 
-let rng = prand.xoroshiro128plus(Date.now() ^ (Math.random() * 0x100000000));
+let rng = new Rand();
 
 export function setSeed(seed: number) {
-	rng = prand.xoroshiro128plus(seed);
+	rng = new Rand(seed.toString(), PRNG.xoshiro128ss);
 }
 
 export function partialRandomColor() {
-	return tinycolor("#81f5ff").spin(prand.unsafeUniformIntDistribution(0, 360, rng)).toHexString();
+	return new TinierColor("#81f5ff").spin(rng.next() * 360).toHexString();
 }
 
 export function multiPartialRandomColor(size: number) {

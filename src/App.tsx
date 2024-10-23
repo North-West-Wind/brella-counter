@@ -8,6 +8,7 @@ import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
 import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
 import { setSeed } from './helper/color.ts';
+import { decodeServerData } from './helper/decode.ts';
 
 export type { Brellas };
 
@@ -60,7 +61,7 @@ function App(props: { analytics?: Analytics, today?: Today, seed?: number }) {
 		const root = document.getElementById("root")!;
 		const data = root.getAttribute("data-server");
 		if (data) {
-			const { analytics: an, today: to, seed: se } = JSON.parse(data);
+			const { analytics: an, today: to, seed: se } = decodeServerData(data);
 			analytics(an);
 			today(to);
       setSeed(se);

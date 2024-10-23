@@ -2,6 +2,7 @@ import { renderToString } from "react-dom/server";
 import App from "../App";
 import { analytics, todayBrellas, todayGames } from "./store";
 import { readdirSync } from "fs";
+import { serverDataToBuffer } from "./helper/minimize";
 
 const STATIC_CONFIG: { [key: string]: string | (() => string) } = {
 	title: "Brella Counter",
@@ -42,7 +43,7 @@ export function renderMeta(html: string) {
 }
 
 export function renderData(html: string, seed: number) {
-	return html.replace("{data}", JSON.stringify({ analytics: analytics(), today: { brellas: todayBrellas(), games: todayGames() }, seed }));
+	return html.replace("{data}", serverDataToBuffer(seed).toString("base64"));
 }
 
 export function renderComponents(html: string, seed: number) {

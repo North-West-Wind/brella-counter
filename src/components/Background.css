@@ -17,8 +17,15 @@
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+	filter: saturate(2) brightness(20%);
 }
 
 .background.hidden {
 	opacity: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .background img {
+    filter: saturate(0.5) brightness(180%);
+  }
 }

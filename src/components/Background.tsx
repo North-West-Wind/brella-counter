@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { Brella } from "../helper/brella";
 import { randomBetween, Vec2 } from "../helper/math";
 import "./Background.css";
-import { useDark } from "../hooks/useDark";
 
 function Background() {
-	const isDark = useDark();
 	const [bg, setBg] = useState("");
 
 	useEffect(() => {
@@ -18,7 +16,7 @@ function Background() {
 		const ribs = [6, 8];
 		const hue = Array(2).fill(randomBetween(0, 360, true)).map((x, ii) => ii == 0 ? x : x + 60);
 		const saturation = [20, 30];
-		const lightness = isDark ? [5, 15] : [90, 100];
+		const lightness = [45, 55];
 
 		for (let ii = 0; ii < 50; ii++) {
 			let retries = 10;
@@ -34,7 +32,7 @@ function Background() {
 		for (const brella of brellas) brella.render(ctx);
 
 		setBg(canvas.toDataURL());
-	}, [isDark]);
+	}, []);
 
 	return <div className={"background" + (bg ? "" : " hidden")}>
 		{bg && <img src={bg} />}

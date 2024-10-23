@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Brella from "./Brella";
 import "./BrellaColumn.css";
 import { multiRandomBoolean, randomBetween } from "../helper/math";
-import { SVG } from "@svgdotjs/svg.js";
 import { useColor } from "../hooks/useColors";
 import { useHorizontal } from "../hooks/useHorizontal";
 
@@ -16,14 +15,13 @@ function BrellaColumn(props: { brellas: string[], integrelle: string }) {
 			if (res.ok) {
 				await new Promise(res => setTimeout(res, randomBetween(500, 1500, true)));
 				const [eyeOpen, mouthOpen] = multiRandomBoolean(2);
-				const draw = SVG();
-				draw.svg(await res.text());
-				draw.find("#eye-open").forEach(item => item.css({ display: eyeOpen ? "inline" : "none" }));
-				draw.find("#eye-close").forEach(item => item.css({ display: !eyeOpen ? "inline" : "none" }));
-				draw.find("#mouth-open").forEach(item => item.css({ display: mouthOpen ? "inline" : "none" }));
-				draw.find("#mouth-close").forEach(item => item.css({ display: !mouthOpen ? "inline" : "none" }));
-
-				setSvg('data:image/svg+xml;base64,' + btoa(draw.svg(false)));
+				const div = document.createElement("div");
+				div.innerHTML = await res.text();
+				(div.querySelector("#eye-open") as HTMLElement).style.display = eyeOpen ? "inline" : "none";
+				(div.querySelector("#eye-close") as HTMLElement).style.display = !eyeOpen ? "inline" : "none";
+				(div.querySelector("#mouth-open") as HTMLElement).style.display = mouthOpen ? "inline" : "none";
+				(div.querySelector("#mouth-close") as HTMLElement).style.display = !mouthOpen ? "inline" : "none";
+				setSvg('data:image/svg+xml;base64,' + btoa(div.innerHTML));
 			}
 		});
 	}, []);

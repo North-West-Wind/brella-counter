@@ -1,8 +1,9 @@
 import { renderToString } from "react-dom/server";
 import App from "../App";
-import { analytics, todayBrellas, todayGames } from "./store";
+import { analytics, today } from "./store";
 import { readdirSync } from "fs";
 import { serverDataToBuffer } from "./helper/minimize";
+import moment from "moment";
 
 const STATIC_CONFIG: { [key: string]: string | (() => string) } = {
 	title: "Brella Counter",
@@ -32,8 +33,9 @@ export function renderMeta(html: string) {
 		brella24mk1,
 		brella24mk2,
 	} = stored.specifics;
-	const brellas = todayBrellas();
-	const games = todayGames();
+	const todayIndex = Math.round(moment().utcOffset() / 60) + 12;
+	const brellas = today().brellas[todayIndex];
+	const games = today().games[todayIndex];
 	const description =
 	`Today's Brella Rate: ${(brellas / games).toPrecision(4)} (${brellas} / ${games})
 	Total: ${stored.totalBrellas} / ${stored.totalGames} (${stored.ourBrellas} vs ${stored.otherBrellas})
@@ -47,7 +49,7 @@ export function renderData(html: string, seed: number) {
 }
 
 export function renderComponents(html: string, seed: number) {
-	return html.replace("<!--app-html-->", renderToString(<App analytics={analytics()} today={{ brellas: todayBrellas(), games: todayGames() }} seed={seed} />));
+	return html.replace("<!--app-html-->", renderToString(<App analytics={analytics()} today={today()} seed={seed} />));
 }
 
 export function render(html: string, seed: number) {

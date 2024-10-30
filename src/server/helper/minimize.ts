@@ -1,5 +1,5 @@
 import { Brellas } from "../common";
-import { analytics, todayBrellas, todayGames } from "../store";
+import { analytics, today } from "../store";
 
 export function serverDataToBuffer(seed: number) {
 	const seedBuf = Buffer.alloc(2);
@@ -36,8 +36,11 @@ function brellasToBuffer(brellas: Brellas) {
 }
 
 function todayToBuffer() {
-	const numbers = Buffer.alloc(2);
-	numbers.writeUInt8(todayBrellas());
-	numbers.writeUInt8(todayGames(), 1);
+	const numbers = Buffer.alloc(2 * (12 + 1 + 14));
+	for (let offset = -12; offset <= 14; offset++) {
+		let ii = offset + 12;
+		numbers.writeUInt8(today().brellas[ii], ii * 2);
+		numbers.writeUInt8(today().games[ii], ii * 2 + 1);
+	}
 	return numbers;
 }

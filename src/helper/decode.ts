@@ -1,4 +1,4 @@
-import { defaultAnalytics, defaultBrellas } from "../server/common";
+import { defaultAnalytics, defaultBrellas, defaultToday } from "../server/common";
 
 export function decodeServerData(data: string) {
 	let buf = base64ToUint8Array(data);
@@ -55,8 +55,11 @@ function decodeBrellas(buf: Uint8Array) {
 }
 
 function decodeToday(buf: Uint8Array) {
-	const today = { brellas: 0, games: 0 };
-	today.brellas = buf[0];
-	today.games = buf[1];
-	return { today, offset: 2 };
+	const today = defaultToday();
+	for (let offset = -12; offset <= 14; offset++) {
+		let ii = offset + 12;
+		today.brellas[ii] = buf[ii * 2];
+		today.games[ii] = buf[ii * 2 + 1];
+	}
+	return { today, offset: 2 * (12 + 1 + 14) };
 }

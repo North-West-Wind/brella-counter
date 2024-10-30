@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import express from "express";
 import { recalibrate, resetDay, updateMatches } from "./helper/observer";
-import { analytics, state, todayBrellas, todayGames } from "./store";
+import { analytics, state, today } from "./store";
 import { ensureRuntimeDir } from "./helper/fs";
 import "dotenv/config";
 import { readdirSync, readFileSync } from "node:fs";
@@ -20,8 +20,8 @@ const UPDATE_INTERVAL = parseInt(process.env.UPDATE_INTERVAL || "300000"); // in
 // every {UPDATE_INTERVAL} fetch matches
 setInterval(updateMatches, UPDATE_INTERVAL);
 
-// every day
-cron.schedule("0 0 * * *", resetDay);
+// every hour for every timezone
+cron.schedule("0 * * * *", resetDay);
 
 // every week
 cron.schedule("0 0 1 * *", recalibrate);
@@ -46,10 +46,7 @@ app.get("/api/analytics", (_req, res) => {
 });
 
 app.get("/api/today", (_req, res) => {
-	res.json({
-		brellas: todayBrellas() || 0,
-		games: todayGames() || 0
-	})
+	res.json(today());
 });
 
 app.get("/random-integrelle", (_req, res) => {

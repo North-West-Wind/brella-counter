@@ -1,5 +1,6 @@
+import moment from "moment";
 import { State, type SplatlogLike } from "../common";
-import { analytics, lastBattleId, state, todayBrellas, todayGames } from "../store";
+import { analytics, lastBattleId, state, today } from "../store";
 import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze";
 import { appendToTextFile } from "./fs";
 import { safeOkState } from "./state";
@@ -69,8 +70,15 @@ export async function updateMatches() {
 }
 
 export function resetDay() {
-	todayGames(0);
-	todayBrellas(0);
+	const td = today()!;
+	for (let ii = -12; ii <= 14; ii++) {
+		if (moment().utcOffset(ii).get("h") == 0) {
+			td.brellas[ii + 12] = 0;
+			td.games[ii + 12] = 0;
+			break;
+		}
+	}
+	today(td);
 }
 
 export async function recalibrate() {

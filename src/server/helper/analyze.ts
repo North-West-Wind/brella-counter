@@ -5,7 +5,7 @@ import { getRuntimePath, saveToTextFile } from "./fs";
 import { Buffer } from "node:buffer";
 import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common";
 import { existsSync } from "node:fs";
-import { todayBrellas, todayGames } from "../store";
+import { today } from "../store";
 
 export function analyzeFile() {
 	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
@@ -52,14 +52,21 @@ export function analyzeFile() {
 
 export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike) {
 	analytics.totalGames++;
-	const today = moment.unix(splatlog.start_at.time).isSame(new Date(), "day");
-	if (today) todayGames((todayGames() || 0) + 1);
+	const td = today();
+	const startTime = moment.unix(splatlog.start_at.time);
+	const days: number[] = [];
+	for (let ii = -12; ii <= 14; ii++)
+		if (startTime.isSame(moment().utcOffset(ii), "day"))
+			days.push(ii + 12);
+	for (const day in days)
+		td.games[day]++;
 	const our = splatlog.our_team_members;
 	our.forEach((member: Member) => {
 		if (member.me || member.weapon.type.key != "brella") return;
 		analytics.ourBrellas++;
 		analytics.totalBrellas++;
-		if (today) todayBrellas((todayBrellas() || 0) + 1);
+		for (const day in days)
+			td.brellas[day]++;
 		if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 	});
 	const their = splatlog.their_team_members;
@@ -67,7 +74,8 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike
 		if (member.weapon.type.key != "brella") return;
 		analytics.otherBrellas++;
 		analytics.totalBrellas++;
-		if (today) todayBrellas((todayBrellas() || 0) + 1);
+		for (const day in days)
+			td.brellas[day]++;
 		if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 	});
 	if (splatlog.third_team_members) {
@@ -76,7 +84,8 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike
 			if (member.weapon.type.key != "brella") return;
 			analytics.otherBrellas++;
 			analytics.totalBrellas++;
-			if (today) todayBrellas((todayBrellas() || 0) + 1);
+			for (const day in days)
+				td.brellas[day]++;
 			if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 		});
 	}

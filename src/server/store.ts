@@ -1,16 +1,14 @@
-import { defaultAnalytics, State, type Analytics } from "./common";
+import { defaultAnalytics, defaultToday, State, Today, type Analytics } from "./common";
 
 const internal: {
 	lastBattleId: string,
 	analytics: Analytics,
-	todayGames: number,
-	todayBrellas: number,
+	today: Today,
 	state: State
 } = {
 	lastBattleId: "",
 	analytics: defaultAnalytics(),
-	todayGames: 0,
-	todayBrellas: 0,
+	today: defaultToday(),
 	state: State.STARTING
 };
 
@@ -24,14 +22,9 @@ export function analytics(ne?: Analytics) {
 	return internal.analytics;
 }
 
-export function todayGames(ne?: number) {
-	if (ne !== undefined) internal.todayGames = ne;
-	return internal.todayGames;
-}
-
-export function todayBrellas(ne?: number) {
-	if (ne !== undefined) internal.todayBrellas = ne;
-	return internal.todayBrellas;
+export function today(ne?: Today) {
+	if (ne !== undefined) internal.today = ne;
+	return internal.today;
 }
 
 export function state(ne?: State) {

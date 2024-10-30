@@ -6,11 +6,12 @@ import About from './components/About.tsx';
 import TeamStats from './components/TeamStats.tsx';
 import TodayStats from './components/TodayStats.tsx';
 import Background from './components/Background.tsx';
-import { Analytics, Brellas, defaultAnalytics } from './server/common.ts';
+import { Analytics, Brellas, defaultAnalytics, defaultToday, Today } from './server/common.ts';
 import { setSeed } from './helper/color.ts';
 import { decodeServerData } from './helper/decode.ts';
+import Details from './components/Details.tsx';
 
-export type { Brellas };
+export type { Brellas, Today };
 
 async function updateAnalytics() {
   let res = await fetch("/api/analytics");
@@ -29,20 +30,12 @@ async function updateAnalytics() {
   }
 }
 
-export type Today = {
-	brellas: number,
-	games: number
-}
-
 const internal: {
 	analytics: Analytics,
 	today: Today,
 } = {
 	analytics: defaultAnalytics(),
-	today: {
-		brellas: 0,
-		games: 0
-	},
+	today: defaultToday(),
 };
 
 export function analytics(ne?: Analytics) {
@@ -86,8 +79,10 @@ function App(props: { analytics?: Analytics, today?: Today, seed?: number }) {
       <h1 className='unimportant'>NorthWestWind's Brella Counter</h1>
       <TodayStats />
       <BrellaStats />
+      <h1 className='unimportant'>Cumulative Stats</h1>
       <TotalStats />
       <TeamStats />
+      <Details />
       <About />
     </>
   )

@@ -39,6 +39,11 @@ export type Analytics = {
 	specifics: Brellas
 }
 
+export type Today = {
+	brellas: number[],
+	games: number[],
+};
+
 export enum State {
 	STARTING = "starting",
 	OK = "ok",
@@ -70,6 +75,13 @@ export function defaultBrellas() {
 		brella24mk1: 0, // recycled 1
 		brella24mk2: 0, // recycled 2
 	} as Brellas;
+}
+
+export function defaultToday() {
+	return {
+		brellas: Array(12 + 1 + 14).fill(() => []).map(x => x()),
+		games: Array(12 + 1 + 14).fill(() => []).map(x => x())
+	} as Today;
 }
 
 export type SplatlogLike = {

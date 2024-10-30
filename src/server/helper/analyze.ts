@@ -54,19 +54,19 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike
 	analytics.totalGames++;
 	const td = today();
 	const startTime = moment.unix(splatlog.start_at.time);
-	const days: number[] = [];
+	const timezones: number[] = [];
 	for (let ii = -12; ii <= 14; ii++)
-		if (startTime.isSame(moment().utcOffset(ii), "day"))
-			days.push(ii + 12);
-	for (const day in days)
-		td.games[day]++;
+		if (startTime.utcOffset(ii).isSame(moment().utcOffset(ii), "day"))
+			timezones.push(ii + 12);
+	for (const tz of timezones)
+		td.games[tz]++;
 	const our = splatlog.our_team_members;
 	our.forEach((member: Member) => {
 		if (member.me || member.weapon.type.key != "brella") return;
 		analytics.ourBrellas++;
 		analytics.totalBrellas++;
-		for (const day in days)
-			td.brellas[day]++;
+		for (const tz of timezones)
+			td.brellas[tz]++;
 		if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 	});
 	const their = splatlog.their_team_members;
@@ -74,8 +74,8 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike
 		if (member.weapon.type.key != "brella") return;
 		analytics.otherBrellas++;
 		analytics.totalBrellas++;
-		for (const day in days)
-			td.brellas[day]++;
+		for (const tz of timezones)
+			td.brellas[tz]++;
 		if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 	});
 	if (splatlog.third_team_members) {
@@ -84,11 +84,12 @@ export function analyzeSingleBattle(analytics: Analytics, splatlog: SplatlogLike
 			if (member.weapon.type.key != "brella") return;
 			analytics.otherBrellas++;
 			analytics.totalBrellas++;
-			for (const day in days)
-				td.brellas[day]++;
+			for (const tz of timezones)
+				td.brellas[tz]++;
 			if (analytics.specifics[member.weapon.key] !== undefined) analytics.specifics[member.weapon.key]++;
 		});
 	}
+	today(td);
 }
 
 export function simplifySplatlog(splatlog: SplatlogLike) {

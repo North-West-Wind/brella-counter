@@ -79,8 +79,8 @@ export function defaultBrellas() {
 
 export function defaultToday() {
 	return {
-		brellas: Array(12 + 1 + 14).fill(() => []).map(x => x()),
-		games: Array(12 + 1 + 14).fill(() => []).map(x => x())
+		brellas: Array(12 + 1 + 14).fill(0),
+		games: Array(12 + 1 + 14).fill(0)
 	} as Today;
 }
 

@@ -1,8 +1,10 @@
 import "./About.css";
 import { useColors } from "../hooks/useColors";
+import { useHorizontal } from "../hooks/useHorizontal";
 
 function About() {
-	const colors = useColors(6);
+	const colors = useColors(16);
+	const horizontal = useHorizontal();
 
 	return <div className="about">
 		<h3>What is this?</h3>
@@ -33,6 +35,26 @@ function About() {
 				You mean her? This is <span className="colored" style={{ color: colors[5] }}>Integrelle</span>! Our beloved Brella-playing inkling girl.
 			</p>
 		</div>
+
+		<h3>I want more!</h3>
+		<p>
+			This website is <span className="colored" style={{ color: colors[6] }}>open source</span>!
+			Feel free to look at the source code on GitHub: <a className="colored" style={{ color: colors[15] }} href="https://github.com/North-West-Wind/brella-counter">https://github.com/North-West-Wind/brella-counter</a>
+		</p>
+
+		<p>
+			I also stream Splatoon 3 every day! Check out my <a className="colored" style={{ color: colors[14] }} href="https://twitch.tv/northwestwindnww">Twitch channel</a> :&gt;.<br />
+			Here are some ways you can reach me: 
+			<ul style={horizontal ? { columns: 2, WebkitColumns: 2, MozColumns: 2 } : {}}>
+				<li><a className="colored" style={{ color: colors[7] }} href="https://blog.northwestw.in/">Blog</a></li>
+				<li><a className="colored" style={{ color: colors[8] }} href="https://discord.gg/srV8JfV">Discord</a></li>
+				<li><a className="colored" style={{ color: colors[9] }} href="https://www.northwestw.in/">Elevator (Cool Website)</a></li>
+				<li><a className="colored" style={{ color: colors[10] }} href="https://wetdry.world/@NorthWestWind">Mastodon</a></li>
+				<li><a className="colored" style={{ color: colors[11] }} href="https://matrix.to/#/#northwestwind:matrix.northwestw.in">Matrix</a></li>
+				<li><a className="colored" style={{ color: colors[12] }} href="https://twitch.tv/northwestwindnww">Twitch</a></li>
+				<li><a className="colored" style={{ color: colors[13] }} href="https://www.youtube.com/c/NorthWestWind">YouTube</a></li>
+			</ul>
+		</p>
 	</div>
 }
 

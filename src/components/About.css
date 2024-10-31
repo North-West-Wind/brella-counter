@@ -22,3 +22,9 @@
 	height: 25vmin;
 	margin-right: 1vmax;
 }
+
+.about ul.hori {
+	columns: 2;
+	-webkit-columns: 2;
+	-moz-columns: 2;
+}

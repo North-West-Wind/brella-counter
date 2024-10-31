@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 import { today } from "../App";
 import { useColor } from "../hooks/useColors";
 

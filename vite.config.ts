@@ -1,9 +1,9 @@
 import { defineConfig, UserConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import preact from "@preact/preset-vite";
 import { resolve } from 'path'
 
 const config: UserConfig = {
-  plugins: [react()],
+  plugins: [preact()],
   build: {
     copyPublicDir: false,
   }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "preact/hooks";
 import { multiPartialRandomColor, partialRandomColor } from "../helper/color";
 
 export function useColors(size: number) {

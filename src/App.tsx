@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './App.css'
 import BrellaStats from './components/BrellaStats.tsx';
 import TotalStats from './components/TotalStats.tsx';
@@ -10,6 +9,7 @@ import { Analytics, Brellas, defaultAnalytics, defaultToday, Today } from './ser
 import { setSeed } from './helper/color.ts';
 import { decodeServerData } from './helper/decode.ts';
 import Details from './components/Details.tsx';
+import { useEffect } from 'preact/hooks';
 
 export type { Brellas, Today };
 

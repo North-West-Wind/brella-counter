@@ -45,7 +45,7 @@ function About() {
 		<p>
 			I also stream Splatoon 3 every day! Check out my <a className="colored" style={{ color: colors[14] }} href="https://twitch.tv/northwestwindnww">Twitch channel</a> :&gt;.<br />
 			Here are some ways you can reach me: 
-			<ul style={horizontal ? { columns: 2, WebkitColumns: 2, MozColumns: 2 } : {}}>
+			<ul className={horizontal ? "hori" : ""}>
 				<li><a className="colored" style={{ color: colors[7] }} href="https://blog.northwestw.in/">Blog</a></li>
 				<li><a className="colored" style={{ color: colors[8] }} href="https://discord.gg/srV8JfV">Discord</a></li>
 				<li><a className="colored" style={{ color: colors[9] }} href="https://www.northwestw.in/">Elevator (Cool Website)</a></li>

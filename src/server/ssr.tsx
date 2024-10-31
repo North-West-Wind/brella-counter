@@ -1,9 +1,9 @@
-import { renderToString } from "react-dom/server";
 import App from "../App";
 import { analytics, today } from "./store";
 import { readdirSync } from "fs";
 import { serverDataToBuffer } from "./helper/minimize";
 import moment from "moment";
+import renderToString from "preact-render-to-string";
 
 const STATIC_CONFIG: { [key: string]: string | (() => string) } = {
 	title: "Brella Counter",

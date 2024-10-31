@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 import Brella from "./Brella";
 import "./BrellaColumn.css";
 import { multiRandomBoolean, randomBetween } from "../helper/math";

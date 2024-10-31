@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 
 export function useHorizontal() {
 	const [horizontal, setHorizontal] = useState(globalThis.window !== undefined ? globalThis.window.innerWidth > globalThis.window.innerHeight : true);

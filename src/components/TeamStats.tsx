@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 import { analytics } from "../App";
 import "./TotalStats.css";
 import { useColors } from "../hooks/useColors";

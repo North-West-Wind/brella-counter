@@ -8,6 +8,9 @@ import { readdirSync, readFileSync } from "node:fs";
 import sirv from "sirv";
 import compression from "compression";
 import { render } from "./ssr";
+import { addClient, removeClient } from "./sse";
+import { AddressInfo } from "node:net";
+import { logger } from "./helper/logger";
 
 // initialize
 ensureRuntimeDir();
@@ -49,9 +52,24 @@ app.get("/api/today", (_req, res) => {
 	res.json(today());
 });
 
+app.get("/api/events", (req, res) => {
+	res.set({
+		'Cache-Control': 'no-cache',
+		'Content-Type': 'text/event-stream',
+		'Connection': 'keep-alive'
+	});
+	res.flushHeaders();
+	res.write(`data: ${JSON.stringify({ analytics: analytics(), today: today() })}\n\n`);
+
+	const uuid = addClient(res);
+	req.on("close", () => {
+		removeClient(uuid);
+	});
+});
+
 app.get("/random-integrelle", (_req, res) => {
 	const files = readdirSync("./public/integrelle/emotes");
 	res.redirect(`/integrelle/emotes/${files[Math.floor(Math.random() * files.length)]}`);
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Server is listening"));
+const server = app.listen(process.env.PORT || 3000, () => logger.info("Server listening to", (server.address() as AddressInfo).port));

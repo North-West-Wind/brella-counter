@@ -14,8 +14,8 @@ function TotalStats() {
 			setGameCount(analytics().totalGames);
 		};
 
-		globalThis.window.addEventListener("custom:update-analytics", update);
-		() => globalThis.window.removeEventListener("custom:update-analytics", update);
+		globalThis.window.addEventListener("brella-update", update);
+		() => globalThis.window.removeEventListener("brella-update", update);
 	}, []);
 	
 	return <h2>

@@ -12,8 +12,8 @@ function Brella(props: { brella: string }) {
 			setBrellaCount(analytics().specifics[props.brella as keyof Brellas]);
 		};
 
-		globalThis.window.addEventListener("custom:update-analytics", update);
-		() => globalThis.window.removeEventListener("custom:update-analytics", update);
+		globalThis.window.addEventListener("brella-update", update);
+		() => globalThis.window.removeEventListener("brella-update", update);
 	}, []);
 
 	return <div className={"brella " + (horizontal ? "hori" : "vert")}>

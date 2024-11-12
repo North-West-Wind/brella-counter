@@ -14,8 +14,8 @@ function TodayStats() {
 			setGameCount(today().games[index]);
 		};
 
-		globalThis.window.addEventListener("custom:update-today", update);
-		() => globalThis.window.removeEventListener("custom:update-today", update);
+		globalThis.window.addEventListener("brella-update", update);
+		() => globalThis.window.removeEventListener("brella-update", update);
 	}, []);
 	
 	return <h2>

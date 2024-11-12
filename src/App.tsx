@@ -9,26 +9,9 @@ import { Analytics, Brellas, defaultAnalytics, defaultToday, Today } from './ser
 import { setSeed } from './helper/color.ts';
 import { decodeServerData } from './helper/decode.ts';
 import Details from './components/Details.tsx';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 export type { Brellas, Today };
-
-async function updateAnalytics() {
-  let res = await fetch("/api/analytics");
-  if (res.ok) {
-    analytics(await res.json());
-    globalThis.window.dispatchEvent(new Event("custom:update-analytics"));
-  }
-  res = await fetch("/api/today");
-  if (res.ok) {
-    const json = await res.json();
-    today({
-      brellas: json.brellas,
-      games: json.games
-    });
-    globalThis.window.dispatchEvent(new Event("custom:update-today"));
-  }
-}
 
 const internal: {
 	analytics: Analytics,
@@ -66,12 +49,22 @@ function App(props: { analytics?: Analytics, today?: Today, seed?: number }) {
     if (props.seed) setSeed(props.seed);
 	}
 
-  useEffect(() => {
-    updateAnalytics();
-    const timer = setInterval(updateAnalytics, 5000);
+  const [listening, setListening] = useState(false);
 
-    return () => clearInterval(timer);
-  });
+  useEffect(() => {
+    if (!listening) {
+      const events = new EventSource("/api/events");
+  
+      events.onmessage = event => {
+        const { analytics: a, today: t } = JSON.parse(event.data);
+        analytics(a);
+        today(t);
+        globalThis.window.dispatchEvent(new Event("brella-update"));
+      };
+
+      setListening(true);
+    }
+  }, [listening]);
 
   return (
     <>

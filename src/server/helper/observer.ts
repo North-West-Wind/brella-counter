@@ -4,6 +4,8 @@ import { analytics, lastBattleId, state, today } from "../store";
 import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze";
 import { appendToTextFile } from "./fs";
 import { safeOkState } from "./state";
+import { broadcast } from "../sse";
+import { logger } from "./logger";
 
 const USER = process.env.STAT_USER || "NorthWestWind";
 
@@ -18,8 +20,8 @@ export async function updateMatches() {
 		const stored = analytics();
 		const last = lastBattleId();
 		const updateAll = !last;
-		if (updateAll) console.log("No last battle ID found. Trying to fetch every page.");
-		else console.log(`Last battle ID is ${last}. Will stop when reached.`);
+		if (updateAll) logger.debug("No last battle ID found. Trying to fetch every page.");
+		else logger.debug(`Last battle ID is ${last}. Will stop when reached.`);
 		let retries = 0;
 		let running = true;
 		let pageFirstId = "";
@@ -29,7 +31,7 @@ export async function updateMatches() {
 		while (running) {
 			let first = true;
 			const pageUrl = url + `?page=${page}`;
-			console.log(`Fetching page ${page} with url ${pageUrl}`);
+			logger.debug(`Fetching page ${page} with url ${pageUrl}`);
 			const res = await fetch(url + `?page=${page}`);
 			if (!res.ok) {
 				if (retries >= 5) throw new Error("probably rate limited");
@@ -53,18 +55,21 @@ export async function updateMatches() {
 						running = false;
 						break;
 					}
-					console.log(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
+					logger.debug(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
 					analyzeSingleBattle(stored, splatlog);
 					stack.push(JSON.stringify(simplifySplatlog(splatlog)));
 				}
 				page++;
 			}
 		}
-		console.log(`Adding ${count} new entries to stats.json`);
-		if (stack.length) appendToTextFile("stats.json", "\n" + stack.reverse().join("\n"));
+		logger.debug(`Adding ${count} new entries to stats.json`);
+		if (stack.length) {
+			appendToTextFile("stats.json", "\n" + stack.reverse().join("\n"));
+			broadcast();
+		}
 		safeOkState(State.UPDATING);
 	} catch (err) {
-		console.error(err);
+		logger.error(err, "Error updating matches");
 		state(State.ERROR);
 	}
 }
@@ -79,10 +84,11 @@ export function resetDay() {
 		}
 	}
 	today(td);
+	broadcast();
 }
 
 export async function recalibrate() {
-	console.log("Recalibrating with file");
+	logger.info("Recalibrating with file");
 	state(State.RECALIBRATING);
 	try {
 		const result = await analyzeFile();
@@ -91,10 +97,11 @@ export async function recalibrate() {
 			analytics(result);
 		}
 		await updateMatches();
+		broadcast();
 		safeOkState(State.RECALIBRATING);
 	} catch (err) {
-		console.error(err);
+		logger.error(err, "Error recalibrating");
 		state(State.ERROR);
 	}
-	console.log("Recalibration completed");
+	logger.info("Recalibration completed");
 }

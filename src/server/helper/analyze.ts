@@ -6,11 +6,12 @@ import { Buffer } from "node:buffer";
 import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common";
 import { existsSync } from "node:fs";
 import { today } from "../store";
+import { logger } from "./logger";
 
 export function analyzeFile() {
 	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
 		if (!existsSync(getRuntimePath("stats.json"))) {
-			console.log("stats.json doesn't exist");
+			logger.warn("stats.json doesn't exist");
 			res(null);
 		}
 		let startDate = 0;
@@ -28,8 +29,7 @@ export function analyzeFile() {
 				if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
 				analyzeSingleBattle(analytics, json);
 			} catch (err) {
-				console.log(`Error on line ${lineCount} when analyzing file`);
-				console.error(err);
+				logger.error(err, `Error on line ${lineCount} when analyzing file`);
 			}
 		});
 		lineReader.on("close", () => {

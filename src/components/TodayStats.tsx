@@ -13,6 +13,7 @@ function TodayStats() {
 			setBrellaCount(today().brellas[index]);
 			setGameCount(today().games[index]);
 		};
+		update();
 
 		globalThis.window.addEventListener("brella-update", update);
 		() => globalThis.window.removeEventListener("brella-update", update);

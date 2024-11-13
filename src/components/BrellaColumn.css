@@ -26,4 +26,9 @@
 .integrelle img {
 	position: relative;
 	width: 100%;
+	transition: transform .25s ease;
+}
+
+.integrelle img.changing {
+	transform: scale(90%);
 }

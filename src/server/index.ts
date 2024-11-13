@@ -72,4 +72,4 @@ app.get("/random-integrelle", (_req, res) => {
 	res.redirect(`/integrelle/emotes/${files[Math.floor(Math.random() * files.length)]}`);
 });
 
-const server = app.listen(process.env.PORT || 3000, () => logger.info("Server listening to", (server.address() as AddressInfo).port));
+const server = app.listen(process.env.PORT || 3000, () => logger.info(`Server listening to port ${(server.address() as AddressInfo).port}`));

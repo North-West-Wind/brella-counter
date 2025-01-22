@@ -40,7 +40,10 @@ function todayToBuffer() {
 	for (let offset = -12; offset <= 14; offset++) {
 		let ii = offset + 12;
 		numbers.writeUInt8(today().brellas[ii], ii * 2);
-		numbers.writeUInt8(today().games[ii], ii * 2 + 1);
+		if (today().games[ii] > 255) {
+			console.log(`Timezone ${offset} is overflowing???`);
+			numbers.writeUInt8(0, ii * 2 + 1);
+		} else numbers.writeUInt8(today().games[ii], ii * 2 + 1);
 	}
 	return numbers;
 }

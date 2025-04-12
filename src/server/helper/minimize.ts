@@ -36,14 +36,14 @@ function brellasToBuffer(brellas: Brellas) {
 }
 
 function todayToBuffer() {
-	const numbers = Buffer.alloc(2 * (12 + 1 + 14));
+	const numbers = Buffer.alloc(3 * (12 + 1 + 14));
 	for (let offset = -12; offset <= 14; offset++) {
 		let ii = offset + 12;
-		numbers.writeUInt8(today().brellas[ii], ii * 2);
+		numbers.writeUInt16BE(today().brellas[ii], ii * 3);
 		if (today().games[ii] > 255) {
 			console.log(`Timezone ${offset} is overflowing???`);
-			numbers.writeUInt8(0, ii * 2 + 1);
-		} else numbers.writeUInt8(today().games[ii], ii * 2 + 1);
+			numbers.writeUInt8(0, ii * 3 + 2);
+		} else numbers.writeUInt8(today().games[ii], ii * 3 + 2);
 	}
 	return numbers;
 }

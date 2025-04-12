@@ -58,8 +58,8 @@ function decodeToday(buf: Uint8Array) {
 	const today = defaultToday();
 	for (let offset = -12; offset <= 14; offset++) {
 		let ii = offset + 12;
-		today.brellas[ii] = buf[ii * 2];
-		today.games[ii] = buf[ii * 2 + 1];
+		today.brellas[ii] = readUInt16BE(buf, ii * 3);
+		today.games[ii] = buf[ii * 3 + 2];
 	}
-	return { today, offset: 2 * (12 + 1 + 14) };
+	return { today, offset: 3 * (12 + 1 + 14) };
 }

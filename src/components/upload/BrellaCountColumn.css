@@ -1,0 +1,54 @@
+.brella {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 1vmax;
+	margin-inline: .5vmax;
+}
+
+.brella img {
+	width: 128px;
+	height: 128px;
+}
+
+.brella input {
+	font-size: 1vmax;
+	padding: .5vmax;
+	position: relative;
+	width: 20%;
+	margin-right: .5vmax;
+}
+
+.brella input::-webkit-outer-spin-button,
+.brella input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.brella input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.num-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: .5vmax;
+}
+
+.num-container .button {
+	font-family: 'Courier New', Courier, monospace;
+	margin-right: .5vmax;
+	font-size: 1vmax;
+	padding: .5vmax;
+	background-color: #222;
+	border-radius: .25max;
+	user-select: none;
+	cursor: pointer;
+	transition: filter .25s ease;
+}
+
+.num-container .button:hover {
+	filter: brightness(150%);
+}

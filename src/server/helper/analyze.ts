@@ -8,7 +8,7 @@ import { existsSync } from "node:fs";
 import { today } from "../store";
 import { logger } from "./logger";
 
-export function analyzeFile() {
+export function analyzeFiles() {
 	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
 		if (!existsSync(getRuntimePath("stats.json"))) {
 			logger.warn("stats.json doesn't exist");
@@ -25,7 +25,7 @@ export function analyzeFile() {
 			if (!line) return;
 			try {
 				const json = JSON.parse(line);
-				lastBattleId = json.id;
+				if (json.id) lastBattleId = json.id;
 				if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
 				analyzeSingleBattle(analytics, json);
 			} catch (err) {
@@ -42,7 +42,8 @@ export function analyzeFile() {
 			text += `\n  - ${analytics.otherBrellas} foes`;
 			text += `\nSpecifics:`;
 			for (const brella of Object.keys(analytics.specifics)) {
-				text += `\n- ${analytics.specifics[brella as keyof Brellas]} ${NAME_MAP[brella]}`;
+				const key = brella as keyof Brellas;
+				text += `\n- ${analytics.specifics[key]} ${NAME_MAP[key]}`;
 			}
 			saveToTextFile("stats.txt", Buffer.from(text));
 			res(Object.assign(analytics, { lastBattleId }));

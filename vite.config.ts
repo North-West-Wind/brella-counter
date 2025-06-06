@@ -15,6 +15,12 @@ if (process.env.BUILD_SERVER) {
 } else {
   config.build!.ssrManifest = true;
   config.build!.outDir = "./dist/client";
+	config.build!.rollupOptions = {
+		input: {
+			index: resolve(__dirname, "index.html"),
+			upload: resolve(__dirname, "upload.html")
+		}
+	};
 }
 
 // https://vitejs.dev/config/

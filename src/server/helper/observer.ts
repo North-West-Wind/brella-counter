@@ -1,7 +1,7 @@
 import moment from "moment";
 import { State, type SplatlogLike } from "../common";
 import { analytics, lastBattleId, state, today } from "../store";
-import { analyzeFile, analyzeSingleBattle, simplifySplatlog } from "./analyze";
+import { analyzeFiles, analyzeSingleBattle, simplifySplatlog } from "./analyze";
 import { appendToTextFile } from "./fs";
 import { safeOkState } from "./state";
 import { broadcast } from "../sse";
@@ -15,6 +15,7 @@ function sleep(ms: number) {
 
 export async function updateMatches() {
 	const url = `https://stat.ink/@${USER}/spl3/index.json`;
+	if (state() != State.OK) return;
 	state(State.UPDATING);
 	try {
 		const stored = analytics();
@@ -74,6 +75,16 @@ export async function updateMatches() {
 	}
 }
 
+export function updateManual(splatlog: SplatlogLike) {
+	state(State.UPDATING);
+	const stored = analytics();
+	logger.debug(`Processing manual splatlog with ID ${splatlog.id}...`);
+	analyzeSingleBattle(stored, splatlog);
+	appendToTextFile("stats.json", "\n" + JSON.stringify(simplifySplatlog(splatlog)));
+	broadcast();
+	safeOkState(State.UPDATING);
+}
+
 export function resetDay() {
 	const td = today()!;
 	for (let ii = -12; ii <= 14; ii++) {
@@ -91,14 +102,14 @@ export async function recalibrate() {
 	logger.info("Recalibrating with file");
 	state(State.RECALIBRATING);
 	try {
-		const result = await analyzeFile();
+		const result = await analyzeFiles();
 		if (result) {
 			lastBattleId(result.lastBattleId);
 			analytics(result);
 		}
+		safeOkState(State.RECALIBRATING);
 		await updateMatches();
 		broadcast();
-		safeOkState(State.RECALIBRATING);
 	} catch (err) {
 		logger.error(err, "Error recalibrating");
 		state(State.ERROR);

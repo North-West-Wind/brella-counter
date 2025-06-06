@@ -6,19 +6,7 @@ export type Member = {
 	};
 }
 
-export type Brellas = {
-	spygadget: number, // vunder
-	spygadget_sorella: number, // sunder
-	parashelter: number, // vbrella
-	parashelter_sorella: number, // sbrella
-	order_shelter_replica: number, // order brella
-	campingshelter: number, // vtent
-	campingshelter_sorella: number, // stent
-	brella24mk1: number, // recycled 1
-	brella24mk2: number, // recycled 2
-}
-
-export const NAME_MAP: { [key: string]: string } = {
+export const NAME_MAP = {
 	spygadget: "vunder", // vunder
 	spygadget_sorella: "sunder", // sunder
 	parashelter: "vbrella", // vbrella
@@ -29,6 +17,10 @@ export const NAME_MAP: { [key: string]: string } = {
 	brella24mk1: "recycled I", // recycled 1
 	brella24mk2: "recycled II", // recycled 2
 };
+
+export type Brellas = {
+	[key in keyof typeof NAME_MAP]: number;
+}
 
 export type Analytics = {
 	firstRecord: string,
@@ -90,4 +82,10 @@ export type SplatlogLike = {
 	our_team_members: Member[],
 	their_team_members: Member[],
 	third_team_members?: Member[],
+}
+
+export type ManualData = {
+	our?: (keyof Brellas)[];
+	other?: (keyof Brellas)[];
+	time?: number;
 }

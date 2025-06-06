@@ -1,0 +1,28 @@
+body #root {
+	text-align: left;
+	max-width: none;
+}
+
+input {
+	font-size: 1vmax;
+	padding: .5vmax;
+	border-width: .25vmax;
+	border-style: solid;
+	border-color: #333;
+	border-radius: .25vmax;
+	transition: border-color .25s ease;
+}
+
+input:focus-visible {
+	outline: none;
+	border-color: #777;
+}
+
+.brellas {
+	display: flex;
+}
+
+table tr th:first-child {
+	padding-right: 1vmax;
+	font-size: 1vmax;
+}

@@ -46,8 +46,6 @@ export default function Uploader() {
 	};
 
 	const upload = () => {
-		console.log(date?.getTime());
-		return;
 		if (uploading) return;
 		setUploading(true);
 

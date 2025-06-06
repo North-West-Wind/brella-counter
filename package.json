@@ -30,7 +30,7 @@
     "preact": "^10.24.3",
     "preact-render-to-string": "^6.5.11",
     "rand-seed": "^2.1.7",
-    "react-datepicker": "^8.4.0",
+    "react-datetime-picker": "^6.0.1",
     "sirv": "^3.0.0"
   },
   "devDependencies": {

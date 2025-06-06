@@ -26,3 +26,19 @@ table tr th:first-child {
 	padding-right: 1vmax;
 	font-size: 1vmax;
 }
+
+.react-datetime-picker__calendar .react-calendar {
+	background-color: black;
+}
+
+.react-calendar__tile--now {
+	color: black;
+}
+
+.react-calendar__tile:enabled:hover, .react-calendar__navigation button:enabled:hover {
+	color: black;
+}
+
+.react-datetime-picker__calendar-button svg, .react-datetime-picker__clear-button svg {
+	stroke: white;
+}

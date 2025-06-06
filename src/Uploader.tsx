@@ -2,10 +2,12 @@ import { useState } from "preact/hooks";
 import "./App.css";
 import BrellaCounterColumn from "./components/upload/BrellaCountColumn";
 import "./Uploader.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 import InfoColumn from "./components/upload/InfoColumn";
 import bcrypt from "bcryptjs";
+import DateTimePicker from "react-datetime-picker";
 
 const brellas = [
 	"spygadget",
@@ -44,6 +46,8 @@ export default function Uploader() {
 	};
 
 	const upload = () => {
+		console.log(date?.getTime());
+		return;
 		if (uploading) return;
 		setUploading(true);
 
@@ -72,19 +76,23 @@ export default function Uploader() {
 
 	return <>
 		<table>
-			<tr>
-				<th>Upload Password</th>
-				<td><input className="password" type="password" value={password} onChange={ev => setPassword(ev.currentTarget.value)} /></td>
-			</tr>
-			<tr>
-				<th>Date (optional)</th>
-				<td><DatePicker onChange={(date) => setDate(date)} /></td>
-				<td><button disabled={uploading} onClick={upload}>Upload</button></td>
-			</tr>
+			<tbody>
+				<tr>
+					<th>Upload Password</th>
+					<td><input className="password" type="password" value={password} onChange={ev => setPassword(ev.currentTarget.value)} /></td>
+				</tr>
+				<tr>
+					<th>Date (optional)</th>
+					<td><DateTimePicker value={date} onChange={(date) => setDate(date)} disableClock /></td>
+					<td><button disabled={uploading} onClick={upload}>Upload</button></td>
+				</tr>
+			</tbody>
+			
 		</table>
 		<div className="brellas">
 			<InfoColumn />
 			{brellas.map(brella => <BrellaCounterColumn
+				key={brella}
 				brella={brella}
 				our={counts[brella] ? counts[brella][0] : 0}
 				other={counts[brella] ? counts[brella][1] : 0}

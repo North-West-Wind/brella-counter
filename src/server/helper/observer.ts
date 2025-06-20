@@ -1,6 +1,6 @@
 import moment from "moment";
 import { State, type SplatlogLike } from "../common";
-import { analytics, lastBattleId, state, today } from "../store";
+import { analytics, battles, state, today } from "../store";
 import { analyzeFiles, analyzeSingleBattle, simplifySplatlog } from "./analyze";
 import { appendToTextFile } from "./fs";
 import { safeOkState } from "./state";
@@ -19,10 +19,6 @@ export async function updateMatches() {
 	state(State.UPDATING);
 	try {
 		const stored = analytics();
-		const last = lastBattleId();
-		const updateAll = !last;
-		if (updateAll) logger.debug("No last battle ID found. Trying to fetch every page.");
-		else logger.debug(`Last battle ID is ${last}. Will stop when reached.`);
 		let retries = 0;
 		let running = true;
 		let pageFirstId = "";
@@ -49,10 +45,9 @@ export async function updateMatches() {
 							break;
 						}
 						pageFirstId = splatlog.id;
-						if (page == 1) lastBattleId(splatlog.id);
 						first = false;
 					}
-					if (!updateAll && splatlog.id == last) {
+					if (battles().has(splatlog.id)) {
 						running = false;
 						break;
 					}
@@ -103,10 +98,7 @@ export async function recalibrate() {
 	state(State.RECALIBRATING);
 	try {
 		const result = await analyzeFiles();
-		if (result) {
-			lastBattleId(result.lastBattleId);
-			analytics(result);
-		}
+		if (result) analytics(result);
 		safeOkState(State.RECALIBRATING);
 		await updateMatches();
 		broadcast();

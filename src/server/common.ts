@@ -9,11 +9,13 @@ export type Member = {
 export const NAME_MAP = {
 	spygadget: "vunder", // vunder
 	spygadget_sorella: "sunder", // sunder
+	spygadget_ryo: "punder", // patternz
 	parashelter: "vbrella", // vbrella
 	parashelter_sorella: "sbrella", // sbrella
 	order_shelter_replica: "order brella", // order brella
 	campingshelter: "vtent", // vtent
 	campingshelter_sorella: "stent", // stent
+	campingshelter_crem: "ctent", // crem tent
 	brella24mk1: "recycled I", // recycled 1
 	brella24mk2: "recycled II", // recycled 2
 };
@@ -59,11 +61,13 @@ export function defaultBrellas() {
 	return {
 		spygadget: 0, // vunder
 		spygadget_sorella: 0, // sunder
+		spygadget_ryo: 0, // patternz
 		parashelter: 0, // vbrella
 		parashelter_sorella: 0, // sbrella
 		order_shelter_replica: 0, // order brella
 		campingshelter: 0, // vtent
 		campingshelter_sorella: 0, // stent
+		campingshelter_crem: 0, // crem tent
 		brella24mk1: 0, // recycled 1
 		brella24mk2: 0, // recycled 2
 	} as Brellas;

@@ -22,16 +22,18 @@ function analyticsToBuffer() {
 }
 
 function brellasToBuffer(brellas: Brellas) {
-	const numbers = Buffer.alloc(2 * 9);
+	const numbers = Buffer.alloc(2 * 11);
 	numbers.writeUInt16BE(brellas.spygadget, 0);
 	numbers.writeUInt16BE(brellas.spygadget_sorella, 2);
-	numbers.writeUInt16BE(brellas.parashelter, 4);
-	numbers.writeUInt16BE(brellas.parashelter_sorella, 6);
-	numbers.writeUInt16BE(brellas.order_shelter_replica, 8);
-	numbers.writeUInt16BE(brellas.campingshelter, 10);
-	numbers.writeUInt16BE(brellas.campingshelter_sorella, 12);
-	numbers.writeUInt16BE(brellas.brella24mk1, 14);
-	numbers.writeUInt16BE(brellas.brella24mk2, 16);
+	numbers.writeUInt16BE(brellas.spygadget_ryo, 4);
+	numbers.writeUInt16BE(brellas.parashelter, 6);
+	numbers.writeUInt16BE(brellas.parashelter_sorella, 8);
+	numbers.writeUInt16BE(brellas.order_shelter_replica, 10);
+	numbers.writeUInt16BE(brellas.campingshelter, 12);
+	numbers.writeUInt16BE(brellas.campingshelter_sorella, 14);
+	numbers.writeUInt16BE(brellas.campingshelter_crem, 16);
+	numbers.writeUInt16BE(brellas.brella24mk1, 18);
+	numbers.writeUInt16BE(brellas.brella24mk2, 20);
 	return numbers;
 }
 

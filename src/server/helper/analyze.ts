@@ -5,18 +5,17 @@ import { getRuntimePath, saveToTextFile } from "./fs";
 import { Buffer } from "node:buffer";
 import { defaultAnalytics, NAME_MAP, type Analytics, type Brellas, type Member, type SplatlogLike } from "../common";
 import { existsSync } from "node:fs";
-import { today } from "../store";
+import { battles, today } from "../store";
 import { logger } from "./logger";
 
 export function analyzeFiles() {
-	return new Promise<Analytics & { lastBattleId: string } | null>((res) => {
+	return new Promise<Analytics | null>((res) => {
 		if (!existsSync(getRuntimePath("stats.json"))) {
 			logger.warn("stats.json doesn't exist");
 			res(null);
 		}
 		let startDate = 0;
 		const analytics = defaultAnalytics();
-		let lastBattleId = "";
 		const inputStream = createReadStream(getRuntimePath("stats.json"));
 		const lineReader = createInterface({ input: inputStream, terminal: false });
 		let lineCount = 0;
@@ -25,7 +24,7 @@ export function analyzeFiles() {
 			if (!line) return;
 			try {
 				const json = JSON.parse(line);
-				if (json.id) lastBattleId = json.id;
+				if (json.id) battles().add(json.id);
 				if (!startDate || json.start_at.time < startDate) startDate = json.start_at.time;
 				analyzeSingleBattle(analytics, json);
 			} catch (err) {
@@ -46,7 +45,7 @@ export function analyzeFiles() {
 				text += `\n- ${analytics.specifics[key]} ${NAME_MAP[key]}`;
 			}
 			saveToTextFile("stats.txt", Buffer.from(text));
-			res(Object.assign(analytics, { lastBattleId }));
+			res(analytics);
 		});
 	});
 }

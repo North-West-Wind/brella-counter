@@ -4,18 +4,15 @@ const internal: {
 	lastBattleId: string,
 	analytics: Analytics,
 	today: Today,
-	state: State
+	state: State,
+	battles: Set<string>,
 } = {
 	lastBattleId: "",
 	analytics: defaultAnalytics(),
 	today: defaultToday(),
-	state: State.STARTING
+	state: State.STARTING,
+	battles: new Set()
 };
-
-export function lastBattleId(ne?: string) {
-	if (ne !== undefined) internal.lastBattleId = ne;
-	return internal.lastBattleId;
-}
 
 export function analytics(ne?: Analytics) {
 	if (ne !== undefined) internal.analytics = ne;
@@ -30,4 +27,8 @@ export function today(ne?: Today) {
 export function state(ne?: State) {
 	if (ne !== undefined) internal.state = ne;
 	return internal.state;
+}
+
+export function battles() {
+	return internal.battles;
 }

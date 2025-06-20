@@ -44,14 +44,16 @@ function decodeBrellas(buf: Uint8Array) {
 	const brellas = defaultBrellas();
 	brellas.spygadget = readUInt16BE(buf);
 	brellas.spygadget_sorella = readUInt16BE(buf, 2);
-	brellas.parashelter = readUInt16BE(buf, 4);
-	brellas.parashelter_sorella = readUInt16BE(buf, 6);
-	brellas.order_shelter_replica = readUInt16BE(buf, 8);
-	brellas.campingshelter = readUInt16BE(buf, 10);
-	brellas.campingshelter_sorella = readUInt16BE(buf, 12);
-	brellas.brella24mk1 = readUInt16BE(buf, 14);
-	brellas.brella24mk2 = readUInt16BE(buf, 16);
-	return { brellas, offset: 18 };
+	brellas.spygadget_ryo = readUInt16BE(buf, 4);
+	brellas.parashelter = readUInt16BE(buf, 6);
+	brellas.parashelter_sorella = readUInt16BE(buf, 8);
+	brellas.order_shelter_replica = readUInt16BE(buf, 10);
+	brellas.campingshelter = readUInt16BE(buf, 12);
+	brellas.campingshelter_sorella = readUInt16BE(buf, 14);
+	brellas.campingshelter_crem = readUInt16BE(buf, 16);
+	brellas.brella24mk1 = readUInt16BE(buf, 18);
+	brellas.brella24mk2 = readUInt16BE(buf, 20);
+	return { brellas, offset: 22 };
 }
 
 function decodeToday(buf: Uint8Array) {

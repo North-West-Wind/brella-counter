@@ -54,6 +54,7 @@ export async function updateMatches() {
 					logger.debug(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
 					analyzeSingleBattle(stored, splatlog);
 					stack.push(JSON.stringify(simplifySplatlog(splatlog)));
+					battles().add(splatlog.id);
 				}
 				page++;
 			}

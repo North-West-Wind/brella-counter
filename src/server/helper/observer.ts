@@ -15,7 +15,7 @@ function sleep(ms: number) {
 
 export async function updateMatches() {
 	const url = `https://stat.ink/@${USER}/spl3/index.json`;
-	if (state() != State.OK) return;
+	if (state() == State.UPDATING || state() == State.RECALIBRATING) return;
 	state(State.UPDATING);
 	try {
 		const stored = analytics();

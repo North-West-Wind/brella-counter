@@ -1,22 +1,6 @@
-.brella-hr {
-	position: relative;
-	width: 80%;
-}
-
 .integrelle {
 	opacity: 1;
 	transition: opacity .5s ease;
-}
-
-.integrelle.hori {
-	width: 15vw;
-	height: 15vw;
-	margin: auto;
-}
-
-.integrelle.vert {
-	width: 25vw;
-	height: 25vw;
 }
 
 .integrelle.hidden {
@@ -31,4 +15,50 @@
 
 .integrelle img.changing {
 	transform: scale(90%);
+}
+
+@media (orientation: landscape) {
+	.integrelle {
+		width: 15vw;
+		height: 15vw;
+		margin: auto;
+	}
+
+	.brella-column {
+  	flex: 1;
+	}
+
+	.brella-hr {
+		position: relative;
+		width: 80%;
+	}
+
+	.inner-brella-column {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+
+	.inner-brella-column .integrelle {
+		display: none;
+	}
+}
+
+@media (orientation: portrait) {
+	.integrelle {
+		width: 25vw;
+		height: 25vw;
+	}
+
+	.brella-hr {
+		display: none;
+	}
+
+	.inner-brella-column {
+	  display: flex;
+	  align-items: center;
+	}
+
+	.brella-column > .integrelle {
+		display: none;
+	}
 }

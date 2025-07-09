@@ -13,7 +13,7 @@ function Details() {
 		};
 
 		globalThis.window.addEventListener("brella-update", update);
-		() => globalThis.window.removeEventListener("brella-update", update);
+		return () => globalThis.window.removeEventListener("brella-update", update);
 	}, []);
 
 	return <>

@@ -40,7 +40,7 @@ function brellasToBuffer(brellas: Brellas) {
 function todayToBuffer() {
 	const numbers = Buffer.alloc(3 * (12 + 1 + 14));
 	for (let offset = -12; offset <= 14; offset++) {
-		let ii = offset + 12;
+		const ii = offset + 12;
 		numbers.writeUInt16BE(today().brellas[ii], ii * 3);
 		if (today().games[ii] > 255) {
 			console.log(`Timezone ${offset} is overflowing???`);

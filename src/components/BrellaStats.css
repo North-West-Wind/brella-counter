@@ -1,0 +1,11 @@
+@media (orientation: landscape) {
+	div.brella-stats {
+	  align-items: end;
+	}
+}
+
+@media (orientation: portrait) {
+	div.brella-stats {
+	  flex-direction: column;
+	}
+}

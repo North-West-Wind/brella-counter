@@ -1,14 +1,18 @@
-.brella.vert img {
-	max-width: 128px;
-	width: 20vw;
+@media (orientation: portrait) {
+	.brella img {
+		max-width: 128px;
+		width: 20vw;
+	}
 }
 
-.brella.hori {
-	display: flex;
-	align-items: center;
-}
+@media (orientation: landscape) {
+	.brella {
+		display: flex;
+		align-items: center;
+	}
 
-.brella.hori img {
-	width: 128px;
-	height: 128px;
+	.brella img {
+		width: 128px;
+		height: 128px;
+	}
 }

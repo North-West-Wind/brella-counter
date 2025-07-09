@@ -1,36 +1,28 @@
 import { useEffect, useState } from "preact/hooks";
-import { Brella } from "../helper/brella";
-import { randomBetween, Vec2 } from "../helper/math";
+import { randomBetween } from "../helper/math";
 import "./Background.css";
+import BrellaTransition from "brella-transition";
 
 function Background() {
 	const [bg, setBg] = useState("");
 
 	useEffect(() => {
+		const hue = randomBetween(0, 360, true);
+		const transition = new BrellaTransition({
+			brellaMax: 50,
+			brellaRetries: 10,
+			brellaRibs: [6, 8],
+			colorHue: [hue, hue + 60],
+			colorSaturation: [20, 30],
+			colorLightness: [45, 55],
+			frameAttack: 0,
+		});
+		transition.activate();
 		const canvas = document.createElement("canvas");
 		canvas.width = 2048;
 		canvas.height = 2048;
 		const ctx = canvas.getContext("2d")!;
-
-		const brellas: Brella[] = [];
-		const ribs = [6, 8];
-		const hue = Array(2).fill(randomBetween(0, 360, true)).map((x, ii) => ii == 0 ? x : x + 60);
-		const saturation = [20, 30];
-		const lightness = [45, 55];
-
-		for (let ii = 0; ii < 50; ii++) {
-			let retries = 10;
-			var pos: Vec2;
-			// Keep retrying if overlapped
-			do {
-				pos = new Vec2(canvas.width * Math.random(), canvas.height * Math.random());
-			} while (brellas.some(brella => brella.position.addVec(pos.inverse()).magnitudeSqr() < Math.pow(brella.size * 0.47, 2)) && retries--);
-			brellas.push(new Brella(pos, randomBetween(canvas.height * 0.3, canvas.height * 0.4), ribs[Math.floor(Math.random() * ribs.length)], hue, saturation, lightness));
-		}
-		
-		// Draw all the brellas
-		for (const brella of brellas) brella.render(ctx);
-
+		transition.render(ctx);
 		setBg(canvas.toDataURL());
 	}, []);
 

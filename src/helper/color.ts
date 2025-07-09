@@ -1,5 +1,5 @@
+import { TinierColor } from "brella-transition";
 import Rand, { PRNG } from "rand-seed";
-import { TinierColor } from "./tinier-color";
 
 let rng = new Rand();
 

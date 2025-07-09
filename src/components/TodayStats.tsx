@@ -8,7 +8,7 @@ function TodayStats() {
 	const color = useColor();
 
 	useEffect(() => {
-		let index = -Math.round(new Date().getTimezoneOffset() / 60) + 12;
+		const index = -Math.round(new Date().getTimezoneOffset() / 60) + 12;
 		const update = () => {
 			setBrellaCount(today().brellas[index]);
 			setGameCount(today().games[index]);
@@ -16,7 +16,7 @@ function TodayStats() {
 		update();
 
 		globalThis.window.addEventListener("brella-update", update);
-		() => globalThis.window.removeEventListener("brella-update", update);
+		return () => globalThis.window.removeEventListener("brella-update", update);
 	}, []);
 	
 	return <h2>

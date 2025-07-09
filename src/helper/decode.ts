@@ -11,10 +11,10 @@ export function decodeServerData(data: string) {
 }
 
 function base64ToUint8Array(base64: string) {
-	var binaryString = atob(base64);
-	var bytes = new Uint8Array(binaryString.length);
-	for (var i = 0; i < binaryString.length; i++) {
-		bytes[i] = binaryString.charCodeAt(i);
+	const binaryString = atob(base64);
+	const bytes = new Uint8Array(binaryString.length);
+	for (let ii = 0; ii < binaryString.length; ii++) {
+		bytes[ii] = binaryString.charCodeAt(ii);
 	}
 	return bytes;
 }
@@ -59,7 +59,7 @@ function decodeBrellas(buf: Uint8Array) {
 function decodeToday(buf: Uint8Array) {
 	const today = defaultToday();
 	for (let offset = -12; offset <= 14; offset++) {
-		let ii = offset + 12;
+		const ii = offset + 12;
 		today.brellas[ii] = readUInt16BE(buf, ii * 3);
 		today.games[ii] = buf[ii * 3 + 2];
 	}

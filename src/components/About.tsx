@@ -32,7 +32,7 @@ function About() {
 
 		<h3>Who is she?</h3>
 		<div className="flex vcenter">
-			<img className="integrelle" src="/random-integrelle" />
+			<img className="integrelle-img" src="/random-integrelle" />
 			<p>
 				You mean her? This is <span className="colored" style={{ color: colors[5] }}>Integrelle</span>! Our beloved Brella-playing inkling girl.
 			</p>

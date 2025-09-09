@@ -13,6 +13,7 @@ export function analyzeFiles() {
 		if (!existsSync(getRuntimePath("stats.json"))) {
 			logger.warn("stats.json doesn't exist");
 			res(null);
+			return;
 		}
 		let startDate = 0;
 		const analytics = defaultAnalytics();

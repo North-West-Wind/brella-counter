@@ -1,8 +1,12 @@
 import "./About.css";
 import { useColors } from "../hooks/useColors";
+import { useState } from "preact/compat";
+import WebStamp from "web-stamp";
+import "web-stamp/dist/style.min.css";
 
 function About() {
 	const colors = useColors(16);
+	const [stampOpened, setStampOpened] = useState(false);
 
 	return <div className="about">
 		<h3>What is this?</h3>
@@ -28,7 +32,7 @@ function About() {
 
 		<h3>Who is she?</h3>
 		<div className="flex vcenter">
-			<img src="/random-integrelle" />
+			<img className="integrelle" src="/random-integrelle" />
 			<p>
 				You mean her? This is <span className="colored" style={{ color: colors[5] }}>Integrelle</span>! Our beloved Brella-playing inkling girl.
 			</p>
@@ -53,6 +57,9 @@ function About() {
 				<li><a className="colored" style={{ color: colors[13] }} href="https://www.youtube.com/c/NorthWestWind">YouTube</a></li>
 			</ul>
 		</p>
+		<h3>Web Stamp!</h3>
+		<button onClick={() => setStampOpened(true)}>Give me my Web Stamp!</button>
+		{stampOpened && <WebStamp src="/stamp.svg" onClose={() => setStampOpened(false)} />}
 	</div>
 }
 

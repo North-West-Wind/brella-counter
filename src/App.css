@@ -64,22 +64,21 @@ h2 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+	margin-top: 1em;
+  border-radius: .5em;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #efe33d;
+	color: #000;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: filter 0.25s;
+	outline: none;
+	border: none;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	filter: brightness(80%);
 }
 
 @media (prefers-color-scheme: light) {

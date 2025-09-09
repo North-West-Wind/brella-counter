@@ -2,7 +2,7 @@
 	text-align: left;
 }
 
-.about * {
+.about p, .about ul {
 	font-size: max(1.25vw, 2vh);
 }
 
@@ -17,7 +17,7 @@
 	filter: brightness(80%);
 }
 
-.about img {
+.about img.integrelle {
 	width: 25vmin;
 	height: 25vmin;
 	margin-right: 1vmax;

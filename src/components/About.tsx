@@ -41,7 +41,7 @@ function About() {
 		<h3>I want more!</h3>
 		<p>
 			This website is <span className="colored" style={{ color: colors[6] }}>open source</span>!
-			Feel free to look at the source code on GitHub: <a className="colored" style={{ color: colors[15] }} href="https://github.com/North-West-Wind/brella-counter">https://github.com/North-West-Wind/brella-counter</a>
+			Feel free to look at the source code on Codeberg: <a className="colored" style={{ color: colors[15] }} href="https://codeberg.org/NorthWestWind/brella-counter">https://codeberg.org/NorthWestWind/brella-counter</a>
 		</p>
 
 		<p>

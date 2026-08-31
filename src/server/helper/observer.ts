@@ -9,17 +9,12 @@ import { logger } from "./logger";
 
 const USER = process.env.STAT_USER || "NorthWestWind";
 
-function sleep(ms: number) {
-	return new Promise(res => setTimeout(res, ms));
-}
-
 export async function updateMatches() {
 	const url = `https://stat.ink/@${USER}/spl3/index.json`;
 	if (state() == State.UPDATING || state() == State.RECALIBRATING) return;
 	state(State.UPDATING);
 	try {
 		const stored = analytics();
-		let retries = 0;
 		let running = true;
 		let pageFirstId = "";
 		let page = 1;
@@ -30,34 +25,30 @@ export async function updateMatches() {
 			const pageUrl = url + `?page=${page}`;
 			logger.debug(`Fetching page ${page} with url ${pageUrl}`);
 			const res = await fetch(url + `?page=${page}`);
-			if (!res.ok) {
-				if (retries >= 5) throw new Error("probably rate limited");
-				await sleep(Math.pow(++retries, 3));
-			} else {
-				retries = 0;
-				const json = await res.json() as SplatlogLike[];
-				// process up to last id
-				for (const splatlog of json) {
-					if (first) {
-						if (splatlog.id == pageFirstId) {
-							// we have finished the final page
-							running = false;
-							break;
-						}
-						pageFirstId = splatlog.id;
-						first = false;
-					}
-					if (battles().has(splatlog.id)) {
+			if (!res.ok) throw new Error("Probably rate limited");
+		
+			const json = await res.json() as SplatlogLike[];
+			// process up to last id
+			for (const splatlog of json) {
+				if (first) {
+					if (splatlog.id == pageFirstId) {
+						// we have finished the final page
 						running = false;
 						break;
 					}
-					logger.debug(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
-					analyzeSingleBattle(stored, splatlog);
-					stack.push(JSON.stringify(simplifySplatlog(splatlog)));
-					battles().add(splatlog.id);
+					pageFirstId = splatlog.id;
+					first = false;
 				}
-				page++;
+				if (battles().has(splatlog.id)) {
+					running = false;
+					break;
+				}
+				logger.debug(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
+				analyzeSingleBattle(stored, splatlog);
+				stack.push(JSON.stringify(simplifySplatlog(splatlog)));
+				battles().add(splatlog.id);
 			}
+			page++;
 		}
 		logger.debug(`Adding ${count} new entries to stats.json`);
 		if (stack.length) {

@@ -11,9 +11,8 @@ import { logger } from "./logger";
 export function analyzeFiles() {
 	return new Promise<Analytics | null>((res) => {
 		if (!existsSync(getRuntimePath("stats.json"))) {
-			logger.warn("stats.json doesn't exist");
-			res(null);
-			return;
+			logger.warn("stats.json doesn't exist. Please download it and place it in the work directory.");
+			process.exit(1);
 		}
 		let startDate = 0;
 		const analytics = defaultAnalytics();

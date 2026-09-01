@@ -1,11 +1,11 @@
 import moment from "moment";
 import { State, type SplatlogLike } from "../common";
 import { analytics, battles, state, today } from "../store";
-import { analyzeFiles, analyzeSingleBattle, simplifySplatlog } from "./analyze";
-import { appendToTextFile } from "./fs";
+import { analyzeFiles, analyzeSingleBattle } from "./analyze";
 import { safeOkState } from "./state";
 import { broadcast } from "../sse";
 import { logger } from "./logger";
+import StatFileHolder from "./stats";
 
 const USER = process.env.STAT_USER || "NorthWestWind";
 
@@ -19,7 +19,7 @@ export async function updateMatches() {
 		let pageFirstId = "";
 		let page = 1;
 		let count = 0;
-		const stack: string[] = [];
+		const stack: SplatlogLike[] = [];
 		while (running) {
 			let first = true;
 			const pageUrl = url + `?page=${page}`;
@@ -45,17 +45,18 @@ export async function updateMatches() {
 				}
 				logger.debug(`Processing ${++count}-th splatlog with ID ${splatlog.id}...`);
 				analyzeSingleBattle(stored, splatlog);
-				stack.push(JSON.stringify(simplifySplatlog(splatlog)));
+				stack.push(splatlog);
 				battles().add(splatlog.id);
 			}
 			page++;
 		}
 		logger.debug(`Adding ${count} new entries to stats.json`);
 		if (stack.length) {
-			appendToTextFile("stats.json", "\n" + stack.reverse().join("\n"));
+			StatFileHolder.INSTANCE.append(...stack.reverse());
 			broadcast();
 		}
 		safeOkState(State.UPDATING);
+		logger.info(`Processed ${count} entries from stat.ink`);
 	} catch (err) {
 		logger.error(err, "Error updating matches");
 		state(State.ERROR);
@@ -67,7 +68,7 @@ export function updateManual(splatlog: SplatlogLike) {
 	const stored = analytics();
 	logger.debug(`Processing manual splatlog with ID ${splatlog.id}...`);
 	analyzeSingleBattle(stored, splatlog);
-	appendToTextFile("stats.json", "\n" + JSON.stringify(simplifySplatlog(splatlog)));
+	StatFileHolder.INSTANCE.append(splatlog);
 	broadcast();
 	safeOkState(State.UPDATING);
 }
@@ -89,7 +90,7 @@ export async function recalibrate() {
 	logger.info("Recalibrating with file");
 	state(State.RECALIBRATING);
 	try {
-		const result = await analyzeFiles();
+		const result = analyzeFiles();
 		if (result) analytics(result);
 		safeOkState(State.RECALIBRATING);
 		await updateMatches();
